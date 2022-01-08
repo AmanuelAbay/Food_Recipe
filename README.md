@@ -1,4 +1,4 @@
-# food_and_restaurant_mining
+# Kaffe
 
 ## Project setup
 ```
