@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
-import App from './App.vue'
+import Kaffe from './Kaffe.vue'
+import './assets/css/tailwind.css'
 
-createApp(App).mount('#app')
+createApp(Kaffe).mount('#app')
