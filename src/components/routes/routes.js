@@ -1,12 +1,22 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import RestaurantListVue from "../pages/front/RestaurantList.vue";
-import FoodListVue from "../pages/front/FoodList";
+import HomePage from "../pages/front/HomePage.vue";
+import FoodListVue from "../pages/front/FoodList.vue";
+import RestaurantList from "../pages/front/RestaurantList.vue";
+import Saved from "../pages/front/saved.vue";
+import Admin from "../pages/back/account/admin/dashboard.vue"
 
 const router = createRouter({
     history: createWebHistory(),
-    routes: [
-        { path: '/restaurant', component: RestaurantListVue },
-        { path: '/foods', component: FoodListVue },
+    routes: [{
+            path: '/',
+            component: HomePage,
+            children: [
+                { path: 'restaurants', component: RestaurantList, props: true },
+                { path: 'foods', component: FoodListVue, props: true },
+                { path: 'saved', component: Saved, props: true }
+            ],
+        },
+        { path: '/admin', component: Admin, props: true }
     ]
 });
 export default router
