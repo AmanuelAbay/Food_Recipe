@@ -4,3 +4,7 @@
 .card {
     @apply bg-white rounded overflow-hidden shadow-md relative;
 }
+
+.tag {
+    @apply bg-primary text-white text-sm uppercase font-bold rounded-full py-1 px-3 absolute top-0 ml-2 mt-2;
+}

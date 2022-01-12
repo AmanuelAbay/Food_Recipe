@@ -1,7 +1,7 @@
 <template>
     <body class="pr-5 pl-14">
         <div class="pt-8">
-            <h4 class="text-secondary-900 text-4xl font-bold border-b border-secondary pb-2">Restaurant</h4>
+            <h4 class="text-secondary-900 text-4xl font-bold border-b border-secondary pb-2">Restaurants</h4>
         </div>
         <!-- card views will be here -->
         <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -23,7 +23,7 @@
 <script>
 import RestaurantCardViewVue from "./cardViews/RestaurantCardView.vue"
 export default {
-    name:"restaurant list",
+    name:"Restaurant",
     components:{ RestaurantCardViewVue }
 }
 </script>
