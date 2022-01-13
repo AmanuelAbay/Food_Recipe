@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import RestaurantCardViewVue from "./cardViews/RestaurantCardView.vue"
+import RestaurantCardViewVue from "../cardViews/RestaurantCardView.vue"
 export default {
     name:"Restaurant",
     components:{ RestaurantCardViewVue }

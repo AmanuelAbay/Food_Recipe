@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import RestaurantListVue from "./RestaurantList.vue"
+import RestaurantListVue from "./Restaurant/RestaurantList.vue"
 export default {
     components:{RestaurantListVue}
 }
