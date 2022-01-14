@@ -1,5 +1,5 @@
 <template>
-    <div class="flex md:justify-between py-3 pl-20 pr-10 items-center border-b-100 border-black-900 bg-gray-100">
+    <div class="flex justify-between py-3 pl-20 pr-10 items-center border-b-100 border-black-900 bg-gray-100">
         <div>
             <a href="/"><img src="../../../assets/logo.png" alt="Kaffe" class="h-10"></a>
         </div>
