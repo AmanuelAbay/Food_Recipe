@@ -33,6 +33,10 @@ export default{
     name:"food list",
     components: {
         FoodCardViewVue
-    }
+    },
+        created(){
+        console.log(this.$route.path)
+        
+    },
 }
 </script>
