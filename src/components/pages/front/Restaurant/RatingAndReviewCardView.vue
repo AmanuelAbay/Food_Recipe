@@ -21,7 +21,7 @@
                 </div>
             </li>            
         </ul>
-    <div class="w-max mt-4 ml-14 mb-10 cursor-pointer capitalize btn border border-gray-200 py-1 px-2 shadow rounded bg-secondary-100 text-secondary-200 hover:shadow-inner hover:bg-opacity-50 transition ease-out duration-300">Load More</div>
+    <div class="w-max mt-4 ml-14 mb-10 cursor-pointer capitalize btn border border-gray-200 py-1 px-2 shadow rounded bg-secondary-100 text-secondary-200 hover:shadow-inner hover:bg-opacity-50 transition ease-out duration-300 capitalize">See More</div>
     </section>
 </template>
 

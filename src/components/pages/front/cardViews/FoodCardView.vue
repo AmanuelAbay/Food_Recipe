@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="tag block item-center text-center">
-            <div>25</div>
+            <div>220</div>
             <div>ETB</div>
 
         </div>
