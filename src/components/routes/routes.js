@@ -7,7 +7,7 @@ import Admin from "../pages/back/account/admin/dashboard.vue"
 import Description from "../pages/front/Restaurant/RestaurantDescription.vue"
 // import RestaurantServiceList from "../pages/front/Restaurant/RestaurantServiceList.vue"
 import RatingAndReview from "../pages/front/Restaurant/RatingAndReviewCardView.vue"
-import RestaurantLocation from "../pages/front/Restaurant/RestaurantLocation.vue"
+import RestaurantLocation from "../pages/front/Restaurant/RestaurantLocation.vue";
 const router = createRouter({
     history: createWebHistory(),
     routes: [{
