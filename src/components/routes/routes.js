@@ -15,13 +15,17 @@ const router = createRouter({
             component: HomePage,
             children: [
                 { path: '/', component: RestaurantList, props: true },
-                { path: 'restaurants', component: RestaurantList, props: true },
+                {
+                    path: 'restaurants',
+                    component: RestaurantList,
+                    props: true
+                },
                 { path: 'foods', component: FoodListVue, props: true },
                 { path: 'saved', component: Saved, props: true }
             ],
         },
         { path: '/admin', component: Admin, props: true },
-        { path: '/description', component: Description, props: true },
+        { path: '/restaurants/description', component: Description, props: true },
         { path: '/rate', component: RatingAndReview },
         { path: '/location', component: RestaurantLocation }
     ]

@@ -1,7 +1,7 @@
 <template>
     <div class="flex justify-between py-3 md:pl-20 sm:pl-5 pr-10 items-center border-b-100 border-black-900 bg-gray-100">
         <div>
-            <a href="/"><img src="../../../assets/logo.png" alt="Kaffe" class="h-10"></a>
+            <a href="/restaurants"><img src="../../../assets/logo.png" alt="Kaffe" class="h-10"></a>
         </div>
         <div>
             <ul class="flex justify-between items-center">
@@ -15,10 +15,16 @@
                 <li>
                     <div class="relative flex justify-center items-center border border-gray-400 py-0.5 px-2 bg-white rounded-full">
                         <svg class="absoulte left-0 w-4 h-4" fill="none" stroke="gray" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                        <input type="text" placeholder="Search Restaurant..." autocomplete="off" class="text-base placeholder-gray">
+                        <input type="text" placeholder="Search Restaurant..." autocomplete="off" class="text-base placeholder-gray ml-1">
                     </div>
                 </li>
             </ul>
         </div>
     </div>
 </template>
+
+<style scoped>
+input:focus{
+    outline: none;
+}
+</style>

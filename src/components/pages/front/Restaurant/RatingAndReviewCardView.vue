@@ -1,5 +1,5 @@
 <template>
-    <section class="border-t border-3 mt-14">
+    <section class="border-t border-3 mt-14 mr-5">
         <div class="font-bold capitalize text-2xl mt-3">Rating and Review</div>
         <ul class="block space-y-4 mt-5 ml-5">
             <li>

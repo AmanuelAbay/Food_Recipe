@@ -55,10 +55,10 @@
             </div>
         </div>
         <keep-alive>
-            <component :is="selectedComponent"></component>
+            <component :is="selectedComponent" class="px-7"></component>
         </keep-alive>
         <RatingAndReviewCardViewVue class="pl-20 mb-2"/>
-        <div class="bg-gray-150 flex justify-start items-center py-4">
+        <div class="bg-gray-200 flex justify-start items-center py-4">
             <font-awesome-icon icon="user-circle" class=" ml-20 text-black text-3xl mr-2"></font-awesome-icon>
             <div><input type="text" class="input rounded shadow mr-2 border border-gray-400" v-model="comment"/></div>
             <button class=" bg-primary hover:bg-gray-700 py-0.5 font-semibold rounded-md px-3 ml-4">Post</button>

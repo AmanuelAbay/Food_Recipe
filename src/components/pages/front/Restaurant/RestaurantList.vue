@@ -5,7 +5,9 @@
         </div>
         <!-- card views will be here -->
         <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <RestaurantCardViewVue/>
+            <router-link to="/restaurants/description">
+                <RestaurantCardViewVue/>
+            </router-link>
             <RestaurantCardViewVue/>
             <RestaurantCardViewVue/>
             <RestaurantCardViewVue/>
