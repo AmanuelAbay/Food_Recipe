@@ -25,7 +25,7 @@ const router = createRouter({
             ],
         },
         { path: '/admin', component: Admin, props: true },
-        { path: '/restaurants/description', component: Description, props: true },
+        { path: '/restaurants/description/:id', component: Description, props: true },
         { path: '/rate', component: RatingAndReview },
         { path: '/location', component: RestaurantLocation }
     ]
