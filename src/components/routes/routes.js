@@ -5,7 +5,9 @@ import RestaurantList from "../pages/front/Restaurant/RestaurantList.vue";
 import Saved from "../pages/front/saved.vue";
 import Admin from "../pages/back/account/admin/dashboard.vue"
 import Description from "../pages/front/Restaurant/RestaurantDescription.vue"
-import RestaurantServiceList from "../pages/front/Restaurant/RestaurantServiceList.vue"
+// import RestaurantServiceList from "../pages/front/Restaurant/RestaurantServiceList.vue"
+import RatingAndReview from "../pages/front/Restaurant/RatingAndReviewCardView.vue"
+import RestaurantLocation from "../pages/front/Restaurant/RestaurantLocation.vue";
 const router = createRouter({
     history: createWebHistory(),
     routes: [{
@@ -13,14 +15,19 @@ const router = createRouter({
             component: HomePage,
             children: [
                 { path: '/', component: RestaurantList, props: true },
-                { path: 'restaurants', component: RestaurantList, props: true },
+                {
+                    path: 'restaurants',
+                    component: RestaurantList,
+                    props: true
+                },
                 { path: 'foods', component: FoodListVue, props: true },
                 { path: 'saved', component: Saved, props: true }
             ],
         },
         { path: '/admin', component: Admin, props: true },
-        { path: '/description', component: Description, props: true },
-        { path: '/services', component: RestaurantServiceList }
+        { path: '/restaurants/description/:id', component: Description, props: true },
+        { path: '/rate', component: RatingAndReview },
+        { path: '/location', component: RestaurantLocation }
     ]
 });
 export default router
