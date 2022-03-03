@@ -1,64 +1,84 @@
 {
-  "name": "food_and_restaurant_mining",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.36",
-    "@fortawesome/free-brands-svg-icons": "^5.15.4",
-    "@fortawesome/free-regular-svg-icons": "^5.15.4",
-    "@fortawesome/free-solid-svg-icons": "^5.15.4",
-    "@fortawesome/vue-fontawesome": "^3.0.0-5",
-    "@googlemaps/js-api-loader": "^1.13.2",
-    "autoprefixer": "^9.8.8",
-    "bcrypt": "^5.0.1",
-    "cookie-parser": "^1.4.6",
-    "core-js": "^3.6.5",
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.2",
-    "jsonwebtoken": "^8.5.1",
-    "moment": "^2.29.1",
-    "pg": "^8.7.1",
-    "postcss": "^7.0.39",
-    "tailwind": "^4.0.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
-    "uuid": "^8.3.2",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.12",
-    "vue3-google-map": "^0.8.3",
-    "vuex": "^4.0.2"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
+    "name": "food_and_restaurant_mining",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "start": "nodemon src/server.js",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint"
     },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
+    "dependencies": {
+        "@apollo/client": "^3.5.7",
+        "@fortawesome/fontawesome-svg-core": "^1.2.36",
+        "@fortawesome/free-brands-svg-icons": "^5.15.4",
+        "@fortawesome/free-regular-svg-icons": "^5.15.4",
+        "@fortawesome/free-solid-svg-icons": "^5.15.4",
+        "@fortawesome/vue-fontawesome": "^3.0.0-5",
+        "@googlemaps/js-api-loader": "^1.13.2",
+        "@vee-validate/rules": "^4.5.7",
+        "@vue/apollo-option": "^4.0.0-alpha.16",
+        "apollo-boost": "^0.4.9",
+        "apollo-cache-inmemory": "^1.6.6",
+        "apollo-client": "^2.6.10",
+        "apollo-link": "^1.2.14",
+        "apollo-link-http": "^1.5.17",
+        "autoprefixer": "^9.8.8",
+        "bcrypt": "^5.0.1",
+        "bcryptjs": "^2.4.3",
+        "cookie-parser": "^1.4.6",
+        "core-js": "^3.6.5",
+        "cors": "^2.8.5",
+        "cross-fetch": "^3.1.5",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.3",
+        "express-vue": "^5.16.0",
+        "graphql": "^15.8.0",
+        "graphql-tag": "^2.12.6",
+        "jsonwebtoken": "^8.5.1",
+        "moment": "^2.29.1",
+        "node-fetch": "2.0",
+        "nodemon": "^2.0.15",
+        "pg": "^8.7.1",
+        "postcss": "^7.0.39",
+        "tailwind": "^4.0.0",
+        "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
+        "uuid": "^8.3.2",
+        "vee-validate": "^4.5.7",
+        "vue": "^3.0.0",
+        "vue-apollo": "^3.1.0",
+        "vue-router": "^4.0.12",
+        "vue-star-rating": "^2.1.0",
+        "vue3-google-map": "^0.8.3",
+        "vuelidate": "^0.7.7",
+        "vuex": "^4.0.2"
     },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "~4.5.0",
+        "@vue/cli-plugin-eslint": "~4.5.0",
+        "@vue/cli-service": "~4.5.0",
+        "@vue/compiler-sfc": "^3.0.0",
+        "babel-eslint": "^10.1.0",
+        "eslint": "^6.7.2",
+        "eslint-plugin-vue": "^7.0.0"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/vue3-essential",
+            "eslint:recommended"
+        ],
+        "parserOptions": {
+            "parser": "babel-eslint"
+        },
+        "rules": {}
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
+    ]
 }

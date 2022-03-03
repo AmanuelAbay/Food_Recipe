@@ -2,7 +2,7 @@
     <main class="grid md:grid-cols-5">
         <!-- side navigation -->
         <div class="md:col-span-1 sm:justify-between md:flex md:justify-end h-max border-r border-gray-200">
-            <HomeSideNavigation/>
+            <HomeSideNavigation v-if="this.$route.path!=='/food/description/:id'"/>
         </div>
 
         <!-- main body -->
