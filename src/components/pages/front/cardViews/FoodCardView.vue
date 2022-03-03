@@ -1,9 +1,12 @@
 <template>
     <div class="card hover:shadow-lg">
-        <img src="../../../../assets/images/foods/burger.jpg" alt="pizza" class="w-full h-32 sm:h-48 object-cover">
+        <router-link :to="'/food/description/'+ likes">
+            <img src="../../../../assets/images/foods/burger.jpg" alt="pizza" class="w-full h-32 sm:h-48 object-cover">
+        </router-link>
         <div class="m-3">
-            <div class="mb-1">
+             <div class="md:flex justify-between items-center">
                 <span class="font-bold capitalize">{{Name}}</span>
+                <svg class="w-5 h-5" fill="none" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
             </div>
             <div class="flex justify-start items-center">
                 <div class="break-normal w-full description">{{description}}</div>
@@ -11,29 +14,89 @@
             <div class="flex justify-between items-center mt-7">
                 <div class="flex justify-start items-center">
                     <div class="flex justify-start items-center mr-3 cursor-pointer">
-                        <svg class="w-4 h-4" fill="primary" stroke="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
+                        <svg class="w-5 h-5" fill="none" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
                         <div class="text-sm ml-0.5">{{likes}}</div>
                     </div>
-                    <div class="flex justify-start items-center cursor-pointer">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
-                        <div class="text-sm ml-0.5">{{comments}}</div>
+                    <div class="flex justify-start items-center">
+                        <svg class="w-5 h-5" fill="#FF7F3F" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                        <div class="text-sm ml-0.5">(5)</div>
                     </div>
                 </div>
-                <div class="font-semibold capitalize cursor-pointer">
-                    kaldis_coffee
+                <div class="font-semibold capitalize">
+                    <div v-if="this.$route.path!=='/setting/dashboard'">by User</div>
+                    <div v-if="this.$route.path==='/setting/dashboard'" class="flex justify-end space-x-3">
+                        <div>
+                            <router-link :to="'/setting/edititem/'+ likes">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            </router-link>
+                        </div>
+                        <div @click="this.toggleup=false" class="cursor-pointer">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="tag block item-center text-center">
             <div>{{price}}</div>
-            <div>ETB</div>
+            <div>Min</div>
+        </div>
+        <div :class="{'hidden': toggleup}" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div :class="{'hidden': toggleup}" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
 
+                <!-- This element is to trick the browser into centering the modal contents. -->
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                <div :class="{'hidden': toggleup}" class=" inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                        <!-- Heroicon name: outline/exclamation -->
+                        <svg class="h-6 w-6 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                        {{Name}}
+                        </h3>
+                        <div class="mt-2">
+                        <p class="text-sm text-gray-500">
+                            Are you sure you want to delete?
+                        </p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button" @click="DeleteFood" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    Delete
+                    </button>
+                    <button type="button" @click="this.toggleup=true" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    Cancel
+                    </button>
+                </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <script>
+// import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 export default {
-    props:['price', 'imageLink', 'title', 'Name', 'description', 'likes', 'comments']
+    props:['price', 'imageLink', 'title', 'Name', 'description', 'likes', 'comments'],
+    //TODO: take the right props value and arrange with UI arrangement
+    data(){
+        return {
+            toggleup:true
+        }
+    },
+    methods:{
+        DeleteFood(){
+            //TODO: some delete processes will be done here and the modal will be hidden
+            this.toggleup=true;
+        }
+    }
 }
 </script>
 

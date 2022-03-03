@@ -1,0 +1,11 @@
+POST http://localhost:4500/login
+Content-Type: application/json
+
+{
+    "email":"kaleab@gmail.com"
+}
+
+###
+
+GET http://localhost:4500/post
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthbGVhYkBnbWFpbC5jb20iLCJpYXQiOjE2NDYyMjkwOTAsImV4cCI6MTY0NjIyOTEwNX0.vx7iOys1vLr4FcHZzs8OcWY-MP5bXaBEHj12HAR5284

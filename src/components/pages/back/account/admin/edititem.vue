@@ -1,7 +1,7 @@
 <template>
         <div class="flex flex-col items-start px-14">
             <div class="flex flex-col items-center">
-                <h2 class="text-black text-3xl font-bold mt-7 mb-4 capitalize">create new food</h2>
+                <h2 class="text-black text-3xl font-bold mt-7 mb-4 capitalize">Edit Food</h2>
             </div>
             <div class="px-7 pt-5 border-t w-full  border-gray-400">
                 <vee-form action="" class="space-y-6" :validation-schema="schema" @submit="register">
@@ -144,7 +144,7 @@
                                 </div>
                         </div>
                     </div>
-                    <button type="submit"  @click="submitFood" class="w-50 bg-primary p-3 rounded text-white hover:bg-orange-700 transition duration-300">Create</button>
+                    <button type="submit"  @click="submitFood" class="w-50 bg-primary p-3 rounded text-white hover:bg-orange-700 transition duration-300">Update</button>
                 </vee-form>
             </div>
         </div>    

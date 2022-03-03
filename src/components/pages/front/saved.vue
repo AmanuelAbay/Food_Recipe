@@ -1,10 +1,10 @@
 <template>
-    <restaurant-list-vue></restaurant-list-vue>
+    <food-list-vue></food-list-vue>
 </template>
 
 <script>
-import RestaurantListVue from "./Restaurant/RestaurantList.vue"
+import FoodListVue from "./FoodList.vue"
 export default {
-    components:{RestaurantListVue}
+    components:{FoodListVue},
 }
 </script>

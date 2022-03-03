@@ -5,8 +5,8 @@
         </div>
         <!-- list of card views will be displayed -->
          <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <div v-for="food in Foods" :key="food.id">
-                <food-card-view-vue :price=food.price :imageLink="food.imageLink" :Name="food.Name" :description=food.description :likes=food.likes :comments=food.comments></food-card-view-vue>
+            <div v-for="food in foods" :key="food.id">
+                    <food-card-view-vue :price=food.duration :imageLink="imagelink" :Name=food.title :description=food.description :likes=food.id :comments=food.ingredients></food-card-view-vue>
             </div>
         </div>
         <div class="flex justify-center my-8 cursor-pointer">
@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import FoodCardViewVue from "./cardViews/FoodCardView.vue"
+import FoodCardViewVue from "./cardViews/FoodCardView.vue";
+import fetching_foods from "../../graphql/fetch_foods.js"
 export default{
     name:"food list",
     components: {
@@ -24,85 +25,16 @@ export default{
     },
     data(){
         return {
-            Foods:[
-                {
-                    id:"1",
-                    price:320,
-                    imageLink:"",
-                    Name:"Burger",
-                    description:"dolor sit amet consectetur adipisicing elit.Cumque veniam eligendi aperiam nemo velit in placeat necessitatibus numquam itaque! Natus mollitia",
-                    likes:50,
-                    comments:96
-                },
-                {
-                    id:"2",
-                    price:200,
-                    imageLink:"",
-                    Name:"Salad",
-                    description:"dolor sit amet consectetur adipisicing elit.Cumque veniam eligendi aperiam nemo velit in placeat necessitatibus numquam itaque! Natus mollitia",
-                    likes:25,
-                    comments:14
-                },
-                {
-                    id:"3",
-                    price:147,
-                    imageLink:"",
-                    Name:"Burgerizza",
-                    description:"dolor sit amet consectetur adipisicing elit.Cumque veniam eligendi aperiam nemo velit in placeat necessitatibus numquam itaque! Natus mollitia",
-                    likes:12,
-                    comments:100
-                },
-                {
-                    id:"4",
-                    price:150,
-                    imageLink:"",
-                    Name:"Shiro",
-                    description:"Lorem ipsum dolor sit amet consectetur adipisicing elit.Cumque veniam eligendi aperiam nemo velit in placeat necessitatibus numquam itaque! Natus mollitia explicabo porro aliasnecessitatibus ipsamobcaecati voluptatem nulla harum!",
-                    likes:69,
-                    comments:33
-                },
-                
-                {
-                    id:"4",
-                    price:169,
-                    imageLink:"",
-                    Name:"Pizza",
-                    description:"Lorem ipsum dolor sit amet consectetur adipisicing elit.Cumque veniam eligendi aperiam nemo velit in placeat necessitatibus numquam itaque! Natus mollitia explicabo porro aliasnecessitatibus ipsamobcaecati voluptatem nulla harum!",
-                    likes:8,
-                    comments:11
-                },
-                
-                {
-                    id:"4",
-                    price:356,
-                    imageLink:"",
-                    Name:"Pizza",
-                    description:"Lorem ipsum dolor sit amet consectetur adipisicing elit.Cumque veniam eligendi aperiam nemo velit in placeat necessitatibus numquam itaque! Natus mollitia explicabo porro aliasnecessitatibus ipsamobcaecati voluptatem nulla harum!",
-                    likes:55,
-                    comments:24
-                },
-                
-                {
-                    id:"4",
-                    price:154,
-                    imageLink:"",
-                    Name:"Pizza",
-                    description:"Lorem ipsum dolor sit amet consectetur adipisicing elit.Cumque veniam eligendi aperiam nemo velit in placeat necessitatibus numquam itaque! Natus mollitia explicabo porro aliasnecessitatibus ipsamobcaecati voluptatem nulla harum!",
-                    likes:23,
-                    comments:89
-                },
-                
-                {
-                    id:"4",
-                    price:22,
-                    imageLink:"",
-                    Name:"Pizza",
-                    description:"dolor sit amet consectetur adipisicing elit.Cumque veniam eligendi aperiam nemo velit in placeat necessitatibus numquam itaque! Natus mollitia",
-                    likes:50,
-                    comments:96
-                }
-            ]
+            foods:[],
+            users:{}
         }
-    }
+    },
+    apollo: {
+        foods:{
+            query: fetching_foods
+        }
+  },
+    mounted(){
+  },
 }
 </script>
