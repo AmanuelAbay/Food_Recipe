@@ -9,15 +9,15 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 
-
 const PORT = process.env.NODE_SERVER_PORT || 3000;
 
 
 app.post('/signup', signuphandler)
 app.post('/signin', loginhandler)
-    // app.get('/post', authenticateToken, async(req, res) => {
-    //     res.json({ post })
-    // })
+
+// app.get('/post', authenticateToken, async(req, res) => {
+//     res.json({ post })
+// })
 
 // app.post('/login', async(req, res) => {
 //     // Authenticate the User

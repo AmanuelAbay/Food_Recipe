@@ -10,22 +10,20 @@
                 <h2 class="text-primary text-3xl font-bold mt-7 mb-4 uppercase">Welcome</h2>
             </div>
             <div class="px-7">
-                <form action="" class="space-y-6">
+                <vee-form action="" class="space-y-6" :validation-schema="schema" @submit="login">
                     <div>
                         <label for="email" class="block mb-2 font-bold text-sm capitalize">Email</label>
-                        <input type="email" id="email" autocomplete="false" placeholder="example@email.com" class="border border-gray-400 w-full rounded outline-none focus:border-primary py-1 px-3 text-base">
+                        <vee-field type="email" name="email" id="email" autocomplete="false" placeholder="example@email.com" class="border border-gray-400 w-full rounded outline-none focus:border-primary py-1 px-3 text-base"/>
+                        <ErrorMessage class="text-red-600" name="email" />
                     </div>
                     <div>
                         <label for="password" class="block mb-2 font-bold text-sm capitalize">Password</label>
-                        <input type="password" id="password" class="border border-gray-400 w-full rounded outline-none focus:border-primary py-1 px-3 text-base">
-                    </div>
-                    <div class="flex justify-start items-center space-x-2">
-                        <input type="checkbox" id="agree" class="bg-primary required:border-red-500 checked:bg-primary">
-                        <label for="agree" class="text-gray-700 text-sm">Remember Me</label>
+                        <vee-field type="password" name="password" id="password" class="border border-gray-400 w-full rounded outline-none focus:border-primary py-1 px-3 text-base"/>
+                        <ErrorMessage class="text-red-600" name="password" />
                     </div>
                     
-                    <button type="submit" class="block w-full bg-primary p-3 rounded text-white hover:bg-orange-700 transition duration-300">Sign Up</button>
-                </form>
+                    <button type="submit" class="block w-full bg-primary p-3 rounded text-white hover:bg-orange-700 transition duration-300">Log in</button>
+                </vee-form>
                 <div class="pt-3 flex justify-start items-center">
                     <div class="capitalize text-sm font-bold pr-1">New here?</div>
                     <router-link class="font-bold text-primary capitalize" to="/signup">sign up</router-link>
@@ -36,4 +34,41 @@
     
 </template>
 <script>
+import user from "../../../store/Mutations/login.js";
+import { useStorage } from "@vueuse/core";
+import {set} from "../../../utils/user.js"
+export default{
+     data() {
+        return {
+        schema: {
+            email:'required|min:4|max:20|email',
+            password:'required',
+        },
+        }
+  },
+  methods: {
+  login(data){
+      //TODO: login function will be called here and send the logged in user information to store
+    user(data).then((user)=>{
+        console.log(user);
+        if(user && user.token){
+            let claims = user.token.split(".")[1];
+            let d = JSON.parse(window.atob(claims));
+            d["https://hasura.io/jwt/claims"].accessToken = user.token;
+            localStorage.removeItem("session");
+            localStorage.removeItem("token");
+            const state = useStorage("session", d["https://hasura.io/jwt/claims"]);
+            localStorage.setItem("token", user.token);
+            set(state.value);
+            this.$store.dispatch('login',state.value.id)
+            location.replace("/");
+            
+        }
+        else{
+            // by using toast notification USER NOT FOUND message will be displayed here
+        }
+    });
+  },
+}
+}
 </script>

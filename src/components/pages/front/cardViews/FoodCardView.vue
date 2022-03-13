@@ -6,19 +6,19 @@
         <div class="m-3">
              <div class="md:flex justify-between items-center">
                 <span class="font-bold capitalize">{{Name}}</span>
-                <svg class="w-5 h-5" fill="none" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                <svg v-if="this.$route.path!=='/setting/dashboard'" class="w-5 h-5" fill="none" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
             </div>
             <div class="flex justify-start items-center">
                 <div class="break-normal w-full description">{{description}}</div>
             </div>
             <div class="flex justify-between items-center mt-7">
                 <div class="flex justify-start items-center">
-                    <div class="flex justify-start items-center mr-3 cursor-pointer">
-                        <svg class="w-5 h-5" fill="none" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
+                    <div class="flex justify-start items-center mr-3 cursor-pointer" @click="likeToggles()">
+                        <svg class="w-5 h-5" :fill="this.fill" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
                         <div class="text-sm ml-0.5">{{likes}}</div>
                     </div>
                     <div class="flex justify-start items-center">
-                        <svg class="w-5 h-5" fill="#FF7F3F" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                        <svg class="w-5 h-5" fill="none" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
                         <div class="text-sm ml-0.5">(5)</div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="button" @click="DeleteFood" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
+                    <button type="button" @click="DeleteFood(likes)" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm">
                     Delete
                     </button>
                     <button type="button" @click="this.toggleup=true" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
@@ -83,20 +83,84 @@
 </template>
 <script>
 // import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import LIKE from '../../../graphql/LIKE.js';
+import UNLIKE from '../../../graphql/UNLIKE.js';
+import DELETE_FOOD from "../../../graphql/DELETE_FOOD.js";
+import is_liked from '../../../store/Getters/is_liked.js';
+import apollo_client from "../../../utils/apollo";
 export default {
     props:['price', 'imageLink', 'title', 'Name', 'description', 'likes', 'comments'],
     //TODO: take the right props value and arrange with UI arrangement
     data(){
         return {
-            toggleup:true
+            toggleup:true,
+            likeToggle:false,
+            fill:"none",
+            init_fill:"none",
+            is_like:1
         }
     },
     methods:{
-        DeleteFood(){
-            //TODO: some delete processes will be done here and the modal will be hidden
-            this.toggleup=true;
+        DeleteFood(id){
+            this.$apollo.mutate(
+                {
+                    mutation: DELETE_FOOD,
+                    variables:{
+                        food_id:id
+                    }
+                }
+            );
+        location.replace("/setting/dashboard");
+        },
+        likeToggles(){
+            this.likeToggle=!this.likeToggle;
+            if(this.likeToggle)
+            this.fill="#FF7F3F";
+            else this.fill="none";
+        },
+        like_unlike(){
+            if(this.init_fill==="#FF7F3F" && this.fill==="none"){
+            // delete the row
+            apollo_client.mutate(
+                {
+                    mutation: UNLIKE,
+                    variables:{
+                        food_id:this.likes,
+                        user_id:1
+                    }
+                }
+            )
         }
-    }
+        else if(this.init_fill==="none" && this.fill==="#FF7F3F"){
+            // add id's to like table rows
+            apollo_client.mutate(
+                {
+                    mutation: LIKE,
+                    variables:{
+                        food_id:this.likes,
+                        user_id:1
+                    }
+                }
+            )
+        }
+        }
+    },
+    mounted(){
+        is_liked({food_id:this.likes, user_id:1}).then((data)=> {
+            if(data==1){
+                this.fill="#FF7F3F";
+                this.init_fill="#FF7F3F";
+            }
+            else{
+                this.fill="none";
+                this.init_fill="none";
+            }
+            });
+    },
+    unmounted() {
+        this.like_unlike();
+        this.$router.go();
+         }
 }
 </script>
 
