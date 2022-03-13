@@ -5,8 +5,6 @@ query MyQuery {
   foods {
     id
     title
-    ingredients
-    steps
     duration
     description
     user {

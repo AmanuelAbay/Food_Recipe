@@ -151,21 +151,19 @@
 </template>
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import ADD_FOODS from "../../../../graphql/create_food.js"
+import EDIT_FOOD from "../../../../graphql/EDIT_FOOD.js"
 export default {
     components:{
         FontAwesomeIcon
     },
     data(){
         return {
+            id:1,
             step:"",
             isStepNull:false,
-            // category:"",
             steps: [],
             separatedString:[],
             ingredients:[],
-            // title:"",
-            // duration:"",
             ingredient:"",
             description:"",
             schema: {
@@ -187,34 +185,34 @@ export default {
                 this.isStepNull=true;
             }
         },
+        
         joinSteps(){
             this.totalStep = this.steps.join('-');
         },
+
         separatedStrings(){
             this.separatedString=this.totalStep.split('-');
         },
+
         checkCatagory(){
             if(this.category===null)
             return true;
         },
-        submitFood(){
+
+        register(food){
             this.$apollo.mutate(
                 {
-                    mutation: ADD_FOODS,
+                    mutation: EDIT_FOOD,
                     variables:{
-                        category: this.category,
-                        description: "this is the food catagorized under  fruits",
-                        duration: "5",
-                        ingredients: "tomato, oil, onion, pipper",
-                        steps: "adding tomato to oil and adding shiro to other value bla bla bla",
-                        title: "tomato wet",
-                        created_by: 1
+                        category: food.category,
+                        description: this.description,
+                        duration: food.duration+"Min",
+                        title: food.title,
+                        id: 1
                     }
                 }
-            )
-        },
-        register(values){
-            alert("valid form"+ values);
+            ),
+            location.replace("/setting/dashboard");
         }
     }
 }

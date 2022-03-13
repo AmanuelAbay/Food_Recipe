@@ -144,7 +144,7 @@
                                 </div>
                         </div>
                     </div>
-                    <button type="submit"  @click="submitFood" class="w-50 bg-primary p-3 rounded text-white hover:bg-orange-700 transition duration-300">Create</button>
+                    <button type="submit" class="w-50 bg-primary p-3 rounded text-white hover:bg-orange-700 transition duration-300">Create</button>
                 </vee-form>
             </div>
         </div>    
@@ -197,24 +197,20 @@ export default {
             if(this.category===null)
             return true;
         },
-        submitFood(){
+        register(food){
             this.$apollo.mutate(
                 {
                     mutation: ADD_FOODS,
                     variables:{
-                        category: this.category,
-                        description: "this is the food catagorized under  fruits",
-                        duration: "5",
-                        ingredients: "tomato, oil, onion, pipper",
-                        steps: "adding tomato to oil and adding shiro to other value bla bla bla",
-                        title: "tomato wet",
+                        category: food.category,
+                        description: this.description,
+                        duration: food.duration,
+                        title: food.title,
                         created_by: 1
                     }
                 }
             )
-        },
-        register(values){
-            alert("valid form"+ values);
+            location.replace("/setting/dashboard");
         }
     }
 }

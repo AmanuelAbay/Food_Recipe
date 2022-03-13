@@ -6,7 +6,7 @@
         <!-- list of card views will be displayed -->
          <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-10">
             <div v-for="food in foods" :key="food.id">
-                    <food-card-view-vue :price=food.duration :imageLink="imagelink" :Name=food.title :description=food.description :likes=food.id :comments=food.ingredients></food-card-view-vue>
+                    <food-card-view-vue :price=food.duration :imageLink="imagelink" :Name=food.title :description=food.description :likes=food.id :comments=food.description></food-card-view-vue>
             </div>
         </div>
         <div class="flex justify-center my-8 cursor-pointer">

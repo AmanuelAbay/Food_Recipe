@@ -59,14 +59,13 @@
     
 </template>
 <script>
-
 export default{
      data() {
         return {
         schema: {
             firstname: 'required|alpha_spaces',
             lastname:   'required',
-            email:'required|min:3|max:20|email',
+            email:'required|min:4|max:20|email',
             phonenumber:'required',
             password:'required',
             confirmpassword:'password_mismatch:@password'
@@ -76,8 +75,8 @@ export default{
   },
   methods: {
   register(values){
-    console.log(values);
-  }
+    this.$store.dispatch('signup',values)
+  },
 }
 }
 </script>
