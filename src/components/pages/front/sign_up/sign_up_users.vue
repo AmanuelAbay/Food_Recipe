@@ -9,7 +9,7 @@
             </div>
             <div class="px-7">
 
-                <vee-form action="" class="space-y-6" :validation-schema="schema" @submit="register">
+                <vee-form action="" class="space-y-6" :validation-schema="schema" @submit="signup">
 
                     <div class="grid grid-cols-2 items-center">
                         <div class="pr-7">
@@ -59,6 +59,7 @@
     
 </template>
 <script>
+import user from "../../../store/Mutations/signup.js";
 export default{
      data() {
         return {
@@ -74,8 +75,15 @@ export default{
         }
   },
   methods: {
-  register(values){
-    this.$store.dispatch('signup',values)
+  signup(data){
+      user(data).then((user)=>{
+          //if we register the user successfully redirect the user to home page
+          console.log(user);
+
+          // else display error message
+      })
+      // setting user id to store state variable
+    // this.$store.dispatch('signup',state.value.id)
   },
 }
 }

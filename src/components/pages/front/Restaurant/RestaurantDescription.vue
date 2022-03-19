@@ -172,6 +172,7 @@ export default {
                 }
             },
             loadingKey: 'loading',
+            pollInterval: 500,
         }
   },
     mounted(){

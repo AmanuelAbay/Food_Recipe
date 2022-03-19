@@ -17,6 +17,7 @@ const router = createRouter({
     routes: [{
             path: '/',
             component: HomePage,
+            name: "Home",
             children: [
                 { path: '/', component: FoodListVue, props: true },
                 { path: 'foods', component: FoodListVue, props: true },

@@ -1,5 +1,5 @@
 import { computed } from 'vue';
-import { useStorage } from '@vueuse/core'
+import { useStorage } from '@vueuse/core';
 
 const state = useStorage("session", {});
 

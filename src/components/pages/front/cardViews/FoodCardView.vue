@@ -1,32 +1,32 @@
 <template>
     <div class="card hover:shadow-lg">
-        <router-link :to="'/food/description/'+ likes">
+        <router-link :to="'/food/description/'+ food.id">
             <img src="../../../../assets/images/foods/burger.jpg" alt="pizza" class="w-full h-32 sm:h-48 object-cover">
         </router-link>
         <div class="m-3">
              <div class="md:flex justify-between items-center">
-                <span class="font-bold capitalize">{{Name}}</span>
-                <svg v-if="this.$route.path!=='/setting/dashboard'" @click="favoriteToggles()" class="w-5 h-5 cursor-pointer" :fill="this.fav_fill" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                <span class="font-bold capitalize">{{food.title}}</span>
+                <svg v-if="this.$route.path!=='/setting/dashboard'" @click="fav_icon()" class="w-5 h-5 cursor-pointer" :fill="this.fav_fill" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
             </div>
             <div class="flex justify-start items-center">
-                <div class="break-normal w-full description">{{description}}</div>
+                <div class="break-normal w-full description">{{food.description}}</div>
             </div>
             <div class="flex justify-between items-center mt-7">
                 <div class="flex justify-start items-center">
-                    <div class="flex justify-start items-center mr-3 cursor-pointer" @click="likeToggles()">
-                        <svg class="w-5 h-5" :fill="this.fill" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
-                        <div class="text-sm ml-0.5">{{likes}}</div>
+                    <div class="flex justify-start items-center mr-3 cursor-pointer" @click="like_icon()">
+                        <svg class="w-5 h-5" :fill="like_fill" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
+                        <div class="text-sm ml-0.5">{{no_of_like}}</div>
                     </div>
-                    <div class="flex justify-start items-center">
-                        <svg class="w-5 h-5" fill="none" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
-                        <div class="text-sm ml-0.5">(5)</div>
+                    <div v-if="rate!=0" class="flex justify-start items-center">
+                        <svg class="w-5 h-5" fill="#FF7F3F" stroke="#FF7F3F" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                        <div class="text-sm ml-0.5">({{rate}})</div>
                     </div>
                 </div>
                 <div class="font-semibold capitalize">
-                    <div v-if="this.$route.path!=='/setting/dashboard'">by User</div>
+                    <div v-if="this.$route.path!=='/setting/dashboard'">by {{food.user.name}}</div>
                     <div v-if="this.$route.path==='/setting/dashboard'" class="flex justify-end space-x-3">
                         <div>
-                            <router-link :to="'/setting/edititem/'+ likes">
+                            <router-link :to="'/setting/edititem/'+ food.id">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                             </router-link>
                         </div>
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="tag block item-center text-center">
-            <div>{{price}}</div>
+            <div>{{food.duration}}</div>
             <div>Min</div>
         </div>
         <div :class="{'hidden': toggleup}" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
@@ -88,129 +88,129 @@ import FAV from '../../../graphql/FAV.js'
 import UNFAV from '../../../graphql/UNFAV.js'
 import UNLIKE from '../../../graphql/UNLIKE.js';
 import DELETE_FOOD from "../../../graphql/DELETE_FOOD.js";
-import is_liked from '../../../store/Getters/is_liked.js';
-import is_fav from '../../../store/Getters/is_fav.js';
-import apollo_client from "../../../utils/apollo";
 export default {
-    props:['price', 'imageLink', 'title', 'Name', 'description', 'likes', 'comments'],
-    //TODO: take the right props value and arrange with UI arrangement
-    data(){
-        return {
-            toggleup:true,
-            likeToggle:false,
-            favoriteToggle:false,
-            fill:"none",
-            init_fill:"none",
-            fav_fill:"none",
-            fav_init_fill:"none",
-            is_like:1
-        }
-    },
-    methods:{
-        DeleteFood(id){
+    props:{
+        food: {
+        type: Object,
+        default: () => ({}),
+        }},
+        
+        data(){
+            return {
+                toggleup:true,
+                like_fill:"none",
+                fav_fill:"none",
+                no_of_like:null,
+                rate:0
+            }
+        },
+        apollo:{
+        },
+        methods:{
+            DeleteFood(id){
+                this.$apollo.mutate(
+                    {
+                        mutation: DELETE_FOOD,
+                        variables:{
+                            food_id:id
+                        }
+                    }
+                );
+            location.replace("/setting/dashboard");
+            },
+            
+            like_icon(){
+                if(this.like_fill==="#FF7F3F"){
+                // delete the row
             this.$apollo.mutate(
-                {
-                    mutation: DELETE_FOOD,
-                    variables:{
-                        food_id:id
+                    {
+                        mutation: UNLIKE,
+                        variables:{
+                            food_id:this.food.id,
+                            user_id:1
+                        }
                     }
+                )
+                this.like_fill="none"
+            }
+            else if(this.like_fill==="none"){
+                // add id's to like table rows
+                this.$apollo.mutate(
+                    {
+                        mutation: LIKE,
+                        variables:{
+                            food_id:this.food.id,
+                            user_id:1
+                        }
+                    }
+                )
+                this.like_fill="#FF7F3F"
+            }
+            },
+            fav_icon(){
+                if(this.fav_fill==="#FF7F3F"){
+                // delete the row
+                this.$apollo.mutate(
+                    {
+                        mutation: UNFAV,
+                        variables:{
+                            food_id:this.food.id, // sending food id
+                            user_id:1 // sending user id
+                        }
+                    }
+                )
+                this.fav_fill="none"
+            }
+            else if(this.fav_fill==="none"){
+                // add id's to favorites table rows
+                this.$apollo.mutate(
+                    {
+                        mutation: FAV,
+                        variables:{
+                            food_id:this.food.id,
+                            user_id:1
+                        }
+                    }
+                )
+                this.fav_fill="#FF7F3F"
+            }
+            },
+            rate_value(){
+                if(this.food.rates.length>0){
+                let  sum = this.food.rates.reduce(function (prev, next) {
+                    return prev + next.value;
+                    }, 0);
+                this.rate = (sum/this.food.rates.length);
+                console.log("rate value " + this.rate);
                 }
-            );
-        location.replace("/setting/dashboard");
+            else this.rate = 0;
+            }
         },
-        likeToggles(){
-            this.likeToggle=!this.likeToggle;
-            if(this.likeToggle)
-            this.fill="#FF7F3F";
-            else this.fill="none";
+        mounted(){
+            // favorites 
+            if(this.food.favorites.some(food => food.favorite_user_id === 1)){
+            //favorite icon will be colored
+            this.fav_fill = "#FF7F3F";
+        }
+        else{
+            // favorite icon won't be colored
+            this.fav_fill="none";
+        }
+
+        // like items
+        if(this.food.likes.some(food => food.like_user_id === 1)){
+            // Like icon will be colored
+            this.like_fill = "#FF7F3F";
+        }
+        else{
+            // Like icon won't be colored
+            this.like_fill="none";
+        }
+
+            if(this.food.likes.length)
+            this.no_of_like=this.food.likes.length
+            this.rate_value();
         },
-        favoriteToggles(){
-            this.favoriteToggle=!this.favoriteToggle;
-            if(this.favoriteToggle)
-            this.fav_fill="#FF7F3F";
-            else this.fav_fill="none";
-        }
-        ,
-        like_unlike(){
-            if(this.init_fill==="#FF7F3F" && this.fill==="none"){
-            // delete the row
-            apollo_client.mutate(
-                {
-                    mutation: UNLIKE,
-                    variables:{
-                        food_id:this.likes,
-                        user_id:1
-                    }
-                }
-            )
-        }
-        else if(this.init_fill==="none" && this.fill==="#FF7F3F"){
-            // add id's to like table rows
-            apollo_client.mutate(
-                {
-                    mutation: LIKE,
-                    variables:{
-                        food_id:this.likes,
-                        user_id:1
-                    }
-                }
-            )
-        }
-        },
-        fav_unfav(){
-            if(this.fav_init_fill==="#FF7F3F" && this.fav_fill==="none"){
-            // delete the row
-            apollo_client.mutate(
-                {
-                    mutation: UNFAV,
-                    variables:{
-                        food_id:this.likes, // sending food id
-                        user_id:1 // sending user id
-                    }
-                }
-            )
-        }
-        else if(this.fav_init_fill==="none" && this.fav_fill==="#FF7F3F"){
-            // add id's to favorites table rows
-            apollo_client.mutate(
-                {
-                    mutation: FAV,
-                    variables:{
-                        food_id:this.likes,
-                        user_id:1
-                    }
-                }
-            )
-        }
-        }
-    },
-    mounted(){
-        is_liked({food_id:this.likes, user_id:1}).then((data)=> {
-            if(data==1){
-                this.fill="#FF7F3F";
-                this.init_fill="#FF7F3F";
-            }
-            else{
-                this.fill="none";
-                this.init_fill="none";
-            }
-            });
-        is_fav({food_id:this.likes, user_id:1}).then((data)=> {
-            if(data==1){
-                this.fav_fill="#FF7F3F";
-                this.fav_init_fill="#FF7F3F";
-            }
-            else{
-                this.fav_fill="none";
-                this.fav_init_fill="none";
-            }
-            });
-    },
-    unmounted() {
-        this.like_unlike();
-        this.fav_unfav();
-        this.$router.go();
-         }
 }
 </script>
 

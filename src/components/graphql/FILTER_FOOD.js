@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
-const FETCHING_FOODS = gql `
-query MyQuery {
-  foods {
+const FILTER_FOOD = gql `
+query filter($category:String!) {
+  foods(where: {category: {_eq: $category}}){
     id
     title
     description
@@ -43,4 +43,4 @@ query MyQuery {
   }
 }
 `
-export default FETCHING_FOODS
+export default FILTER_FOOD
