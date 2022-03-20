@@ -31,7 +31,7 @@
         <div class="flex flex-col pl-20 py-5 space-y-3">
             <label for="ingredients" class="block mb-2 font-bold text-xl uppercase">ingredients</label>
             <ul class="flex flex-col  pl-20 list-disc space-y-4">
-                <li class="uppercase text-base" v-for="ingredient in foods[0].ingredients" :key="ingredient">{{ingredient.name}}</li>
+                <li class="uppercase text-base" v-for="ingredient in foods[0].ingredients" :key="ingredient.id">{{ingredient.amount}}{{spaceProvider}}{{ingredient.name}}</li>
             </ul>
         </div>
         <div class="flex flex-col pl-20 space-y-3 pt-5">
@@ -91,6 +91,7 @@ export default {
             fav_fill: "none",
             fav_init: "none",
             rate: 0,
+            spaceProvider:" grams of "
         }
     },
     components: {

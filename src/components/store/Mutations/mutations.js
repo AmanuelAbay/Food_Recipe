@@ -1,6 +1,6 @@
 import LikeFoods from './like.js'
 import favoritefoods from './favorite.js'
-import sign_up from './signup.js';
+// import sign_up from './signup.js';
 import FoodComment from './comment.js'
 // const apollo_client = require("../../utils/apollo");
 // const GET_USER = require("../../graphql/USER.js");
@@ -15,16 +15,15 @@ export default {
     favorite(food) {
         favoritefoods(food.id)
     },
-    signup(state, newUser) {
-        const registerd_user = sign_up(newUser);
-        console.log(registerd_user);
+    signup(state, newUserId) {
+        // set currentUserId
+        state.user_id = newUserId
     },
-    async login(state, UserId) {
+    login(state, UserId) {
         // set fetched data to currentUser in statedata
         state.userId = UserId;
     },
     isLoggedInSetter(state, value) {
-        state.currentUser = value.currentUser;
         state.isLoggedIn = value.isLoggedIn;
     },
     logout(state) {

@@ -68,36 +68,38 @@
                         </div>
                         <div class="block">
                             <label for="duration" class="block mb-2 font-bold text-base capitalize">time it takes (min)</label>
-                            <vee-field name="duration" type="number" v-model="duration" id="duration" required placeholder="(min)" class="border block border-gray-400 w-35 rounded outline-none focus:border-primary py-1 px-3 text-base"/>
+                            <vee-field name="duration" min="0" type="number" v-model="duration" id="duration" required placeholder="(min)" class="border block border-gray-400 w-35 rounded outline-none focus:border-primary py-1 px-3 text-base"/>
                             <ErrorMessage class="text-red-600 block" name="duration" />
                         </div>
                     </div>
                     <div class="grid grid-cols-2">
                         <div class="mb-3 xl:w-96">
                             <label for="ingredients" class="block mb-2 font-bold text-base capitalize">ingredients</label>
-                            <textarea
-                            class="
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:text-gray-700 focus:bg-white focus:border-primary focus:outline-none
-                            "
-                            id="ingredients"
-                            rows="3"
-                            required
-                            placeholder="Ingredients"
-                            ></textarea>
+                            <div v-if="ingredients.length!==0" class="pl-10 font-semibold">
+                                <ol class="space-y-3 mb-5 list-decimal">
+                                    <li v-for="ingredient in ingredients" :key="ingredient.name" class="capitalize pl-2">{{ingredient.name}}{{ingredient.amount}}</li>
+                                </ol>
+                            </div>
+
+                            <div class="grid grid-cols-2 items-center">
+                            <div class="pr-7">
+                                <input @keyup.enter="addIngredients" @click="error_ingredient_name=false" v-model="ingredientName" type="text" required name="name" placeholder="Name"  id="ingredientName" class="border border-gray-400 w-full rounded outline-none focus:border-primary py-1 px-3 text-base"/>
+                                <div v-if="error_ingredient_name" class="flex justify-start items-center">
+                                    <font-awesome-icon icon="exclamation-circle" class="text-red-900 text-base ml-5 mr-3"></font-awesome-icon>
+                                    <p class="text-red-900 text-base font-bold">error</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-start items-center space-x-3">
+                                <input @keyup.enter="addIngredients" @click="error_ingredient_amount=false" v-model="amount" name="duration" min="0" type="number" id="amount" required placeholder="(gram)" class="border block border-gray-400 w-35 rounded outline-none focus:border-primary py-1 px-3 text-base"/>
+                                <button @click.prevent="addIngredients" class="w-50 bg-primary p-3 rounded text-white hover:bg-primary transition duration-300">Add</button>
+                            </div>
+                            <div class="grid grid-cols-2 items-center">
+                                <div v-if="error_ingredient_amount" class="flex justify-start items-center">
+                                    <font-awesome-icon icon="exclamation-circle" class="text-red-900 text-base ml-5 mr-3"></font-awesome-icon>
+                                    <p class="text-red-900 text-base font-bold">error</p>
+                                </div>
+                            </div>
+                        </div>
                         </div>
                     </div>
                         <div>
@@ -158,16 +160,20 @@ export default {
     },
     data(){
         return {
+            error_ingredient_name:false,
+            error_ingredient_amount:false,
             step:"",
             isStepNull:false,
             // category:"",
             steps: [],
             separatedString:[],
             ingredients:[],
+            ingredientName:"",
             // title:"",
             // duration:"",
             ingredient:"",
             description:"",
+            amount:null,
             schema: {
                 title: 'required|alpha_spaces',
                 duration:   'required',
@@ -186,6 +192,15 @@ export default {
             else if( this.step==="" || this.step.replace(/\s/g, "").length===0 ) {
                 this.isStepNull=true;
             }
+        },
+        addIngredients(){
+            let ingredient = {name:this.ingredientName, amount:this.amount}
+            if(!(this.ingredientName === null || this.ingredientName.trim() === '')){
+                if(!(this.amount === null || this.amount<=0))
+                this.ingredients.push(ingredient);
+            else this.error_ingredient_amount = true
+            }
+            else this.error_ingredient_name = true
         },
         joinSteps(){
             this.totalStep = this.steps.join('-');

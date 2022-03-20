@@ -1,7 +1,5 @@
 <template>
 <div>
-    <div v-if="this.$route.path=='/foods' || this.$route.path=='/'" class="pr-7">     
-    </div>
     <body class="pr-5 pl-14">
         <div class="pt-6">
             <h4 class="text-secondary-900 text-4xl font-bold border-b border-secondary pb-2" @click="callingGetters()">Foods</h4>

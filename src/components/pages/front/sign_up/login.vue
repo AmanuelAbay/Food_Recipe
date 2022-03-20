@@ -34,9 +34,11 @@
     
 </template>
 <script>
-import user from "../../../store/Mutations/login.js";
+// import user from "../../../store/Mutations/login.js";
+import LOGIN from "../../../graphql/login.js";
 import { useStorage } from "@vueuse/core";
 import {set} from "../../../utils/user.js"
+// import {userId} from "../../../utils/user.js";
 export default{
      data() {
         return {
@@ -46,28 +48,63 @@ export default{
         },
         }
   },
+  apollo:{
+
+  },
   methods: {
-  login(data){
-      //TODO: login function will be called here and send the logged in user information to store
-    user(data).then((user)=>{
-        console.log(user);
-        if(user && user.token){
-            let claims = user.token.split(".")[1];
+  login(user){
+      let data = this.$apollo.mutate({
+        mutation: LOGIN,
+        variables: { "email": user.email, "password": user.password },
+    });
+    if(data){
+        data.then(user=>{
+            console.log(user.data.login);
+            if(user.data.login){
+                console.log("fukck")
+                let claims = user.data.login.token.split(".")[1];
             let d = JSON.parse(window.atob(claims));
-            d["https://hasura.io/jwt/claims"].accessToken = user.token;
+            d["https://hasura.io/jwt/claims"].accessToken = user.data.login.token;
+            console.log(d)
             localStorage.removeItem("session");
             localStorage.removeItem("token");
             const state = useStorage("session", d["https://hasura.io/jwt/claims"]);
-            localStorage.setItem("token", user.token);
+            localStorage.setItem("token", user.data.login.token);
+            console.log(state.value)
             set(state.value);
-            this.$store.dispatch('login',state.value.id)
+            // console.log("state" + state.value["x-hasura-user-id"])
+            // console.log(userId.value);
+
+            // this.$store.dispatch('login',state.value.id)
             location.replace("/");
             
         }
-        else{
-            // by using toast notification USER NOT FOUND message will be displayed here
-        }
-    });
+        // else{
+        //     console.log("user not found")
+        // }
+        })
+    }
+
+        // console.log(user);
+        // if(data && data.data.login & data.data.login.token){
+        //     let claims = data.data.login.token.split(".")[1];
+        //     let d = JSON.parse(window.atob(claims));
+        //     d["https://hasura.io/jwt/claims"].accessToken = data.data.login.token;
+        //     localStorage.removeItem("session");
+        //     localStorage.removeItem("token");
+        //     const state = useStorage("session", d["https://hasura.io/jwt/claims"]);
+        //     localStorage.setItem("token", data.data.login.token);
+        //     set(state.value);
+        //     console.log("state value " + state.value)
+        //     console.log("state value id " + state.value.id);
+
+        //     // this.$store.dispatch('login',state.value.id)
+        //     // location.replace("/");
+            
+        // }
+        // else{
+        //     // by using toast notification USER NOT FOUND message will be displayed here
+        // }
   },
 }
 }

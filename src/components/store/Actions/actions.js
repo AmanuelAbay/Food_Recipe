@@ -10,8 +10,8 @@ export default {
     favorite(context, food) {
         context.commit('favorite', food);
     },
-    signup(context, newUser) {
-        context.commit('signup', newUser);
+    signup(context, newUserId) {
+        context.commit('signup', newUserId);
     },
     login(context, userId) {
         context.commit('login', userId);

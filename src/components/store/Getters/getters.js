@@ -4,5 +4,8 @@ export default {
     },
     getSearch(state) {
         return state.search
+    },
+    userid(state) {
+        return state.user_id
     }
 }
