@@ -9,6 +9,7 @@ mutation ($name: String!, $email: String!, $phone_number: String!, $password: St
     email
     phone_number
     password
+    message
   }
 }
 

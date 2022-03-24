@@ -40,6 +40,9 @@ query search($search_key:String!) {
     favorites{
       favorite_user_id
     }
+    images{
+      path
+    }
   }
 }
 `

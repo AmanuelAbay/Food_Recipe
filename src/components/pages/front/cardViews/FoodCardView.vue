@@ -1,7 +1,7 @@
 <template>
-    <div class="card hover:shadow-lg">
+    <div class="card rounded overflow-hidden shadow-lg drop-shadow-3xl hover:shadow-4xl z-10">
         <router-link :to="'/food/description/'+ food.id">
-            <img src="../../../../assets/images/foods/burger.jpg" alt="pizza" class="w-full h-32 sm:h-48 object-cover">
+            <img :src="food.images[0].path" alt="pizza" class="w-full h-32 sm:h-48 object-cover">
         </router-link>
         <div class="m-3">
              <div class="md:flex justify-between items-center">
@@ -88,19 +88,21 @@ import FAV from '../../../graphql/FAV.js'
 import UNFAV from '../../../graphql/UNFAV.js'
 import UNLIKE from '../../../graphql/UNLIKE.js';
 import DELETE_FOOD from "../../../graphql/DELETE_FOOD.js";
+import {userId} from "../../../utils/user.js"
+import {isLoggedIn} from "../../../utils/user.js"
 export default {
     props:{
         food: {
         type: Object,
         default: () => ({}),
         }},
-        
         data(){
             return {
                 toggleup:true,
                 like_fill:"none",
                 fav_fill:"none",
                 no_of_like:null,
+                loggedIn:false,
                 rate:0
             }
         },
@@ -116,63 +118,69 @@ export default {
                         }
                     }
                 );
+                this.$router.go()
             },
-            
             like_icon(){
-                if(this.like_fill==="#FF7F3F"){
-                // delete the row
-            this.$apollo.mutate(
-                    {
-                        mutation: UNLIKE,
-                        variables:{
-                            food_id:this.food.id,
-                            user_id:1
-                        }
-                    }
-                )
-                this.like_fill="none"
-            }
-            else if(this.like_fill==="none"){
-                // add id's to like table rows
+                if(this.loggedIn){
+                    if(this.like_fill==="#FF7F3F"){
+                    // delete the row
                 this.$apollo.mutate(
-                    {
-                        mutation: LIKE,
-                        variables:{
-                            food_id:this.food.id,
-                            user_id:1
+                        {
+                            mutation: UNLIKE,
+                            variables:{
+                                food_id:this.food.id,
+                                user_id: userId.value
+                            }
                         }
+                    )
+                    this.like_fill="none"
                     }
-                )
-                this.like_fill="#FF7F3F"
-            }
+                else if(this.like_fill==="none"){
+                    // add id's to like table rows
+                    this.$apollo.mutate(
+                        {
+                            mutation: LIKE,
+                            variables:{
+                                food_id:this.food.id,
+                                user_id:userId.value
+                            }
+                        }
+                    )
+                    this.like_fill="#FF7F3F"
+                    }
+                }
+                else this.$router.push("/signin");
             },
             fav_icon(){
-                if(this.fav_fill==="#FF7F3F"){
-                // delete the row
-                this.$apollo.mutate(
-                    {
-                        mutation: UNFAV,
-                        variables:{
-                            food_id:this.food.id, // sending food id
-                            user_id:1 // sending user id
+                if(this.loggedIn){
+                    if(this.fav_fill==="#FF7F3F"){
+                    // delete the row
+                    this.$apollo.mutate(
+                        {
+                            mutation: UNFAV,
+                            variables:{
+                                food_id:this.food.id, // sending food id
+                                user_id: userId.value // sending user id
+                            }
                         }
+                    )
+                    this.fav_fill="none"
                     }
-                )
-                this.fav_fill="none"
-            }
-            else if(this.fav_fill==="none"){
-                // add id's to favorites table rows
-                this.$apollo.mutate(
-                    {
-                        mutation: FAV,
-                        variables:{
-                            food_id:this.food.id,
-                            user_id:1
+                else if(this.fav_fill==="none"){
+                    // add id's to favorites table rows
+                    this.$apollo.mutate(
+                        {
+                            mutation: FAV,
+                            variables:{
+                                food_id:this.food.id,
+                                user_id: userId.value
+                            }
                         }
+                    )
+                    this.fav_fill="#FF7F3F"
                     }
-                )
-                this.fav_fill="#FF7F3F"
-            }
+                }
+                else this.$router.push("/signin");
             },
             rate_value(){
                 if(this.food.rates.length>0){
@@ -185,8 +193,9 @@ export default {
             }
         },
         mounted(){
+            this.loggedIn=isLoggedIn.value
             // favorites 
-            if(this.food.favorites.some(food => food.favorite_user_id === 1)){
+            if(this.food.favorites.some(food => food.favorite_user_id === userId.value)){
             //favorite icon will be colored
             this.fav_fill = "#FF7F3F";
         }
@@ -196,7 +205,7 @@ export default {
         }
 
         // like items
-        if(this.food.likes.some(food => food.like_user_id === 1)){
+        if(this.food.likes.some(food => food.like_user_id === userId.value)){
             // Like icon will be colored
             this.like_fill = "#FF7F3F";
         }

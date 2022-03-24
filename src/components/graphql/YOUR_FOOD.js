@@ -23,6 +23,9 @@ query your_foods($user_id: Int!) {
     favorites {
       favorite_user_id
     }
+    images{
+      path
+    }
   }
 }
 `

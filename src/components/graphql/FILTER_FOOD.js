@@ -40,6 +40,9 @@ query filter($category:String!) {
     favorites{
       favorite_user_id
     }
+    images{
+      path
+    }
   }
 }
 `

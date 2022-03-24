@@ -7,7 +7,4 @@ export default async(newUser) => {
         variables: { "name": newUser.firstname + " " + newUser.lastname, "email": newUser.email, "phone_number": newUser.phonenumber, "password": newUser.password },
     });
     return data.data.signup;
-
-    //todo: data contain token and new user info then we will store the data to the local storage
-
 }

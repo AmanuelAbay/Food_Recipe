@@ -13,24 +13,6 @@ query favorite_food($user_id:Int!) {
       id
       name
     }
-    ingredients{
-      id
-      name
-      amount
-    }
-    steps{
-      id
-      description
-      step_number
-    }
-    comments {
-      id
-      user{
-        id
-        name
-      }
-      comment
-    }
     likes{
       like_user_id
     }
@@ -40,6 +22,9 @@ query favorite_food($user_id:Int!) {
     }
     favorites{
       favorite_user_id
+    }
+    images{
+      path
     }
       }
   }

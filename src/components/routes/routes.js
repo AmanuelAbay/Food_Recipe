@@ -11,6 +11,7 @@ import AccountSetting from "../pages/back/account/admin/account_setting.vue"
 import CreateNewFood from "../pages/back/account/admin/create_new_food.vue"
 import EditItem from "../pages/back/account/admin/edititem.vue"
 import NotFound from "../pages/layouts/notFound.vue"
+import AuthGuard from "../utils/AuthGuard.js"
 
 const router = createRouter({
     history: createWebHistory(),
@@ -19,12 +20,12 @@ const router = createRouter({
             component: HomePage,
             name: "Home",
             children: [
-                { path: '/', component: FoodListVue, props: true },
-                { path: 'foods', component: FoodListVue, props: true },
-                { path: 'saved', component: Saved, props: true }
+                { path: '/', component: FoodListVue },
+                { path: 'foods', component: FoodListVue },
+                { path: 'saved', component: Saved, beforeEnter: AuthGuard }
             ],
         },
-        { path: '/food/description/:id', component: Description, props: true },
+        { path: '/food/description/:id', component: Description },
         { path: '/signup', component: SignUp },
         { path: '/signin', component: SignIn },
         {
@@ -32,14 +33,15 @@ const router = createRouter({
             component: MainSetting,
             props: true,
             children: [
-                { path: '/', component: Dashboard, props: true },
-                { path: 'dashboard', component: Dashboard, props: true },
-                { path: 'account_setting', component: AccountSetting, props: true },
-                { path: 'newItem', component: CreateNewFood, props: true },
-                { path: 'edititem/:id', component: EditItem }
-            ]
+                { path: '/', component: Dashboard, beforeEnter: AuthGuard },
+                { path: 'dashboard', component: Dashboard, beforeEnter: AuthGuard },
+                { path: 'account_setting', component: AccountSetting, beforeEnter: AuthGuard },
+                { path: 'newItem', component: CreateNewFood, beforeEnter: AuthGuard },
+                { path: 'edititem/:id', component: EditItem, beforeEnter: AuthGuard }
+            ],
+            beforeEnter: AuthGuard
         },
-        { path: '/:pathMatch(.*)*', componet: NotFound, props: true }
+        { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
     ]
 });
 export default router

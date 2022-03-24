@@ -40,6 +40,9 @@ query MyQuery {
     favorites{
       favorite_user_id
     }
+    images{
+      path
+    }
   }
 }
 `

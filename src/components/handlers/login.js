@@ -11,14 +11,32 @@ const loginhandler = async(req, res) => {
     });
 
     if (data.data.users.length == 0) {
-        return Error("User not found");
+        res.json({
+            token: false,
+            id: null,
+            name: null,
+            email: null,
+            phone_number: null,
+            password: null,
+            message: "email not found, please sign up first"
+        });
+        return
     }
     const isValidPassword = await bcrypt.compare(
         req.body.input.password,
         data.data.users[0].password
     );
     if (!isValidPassword) {
-        return Error("Invalid password");
+        res.json({
+            token: false,
+            id: null,
+            name: null,
+            email: null,
+            phone_number: null,
+            password: null,
+            message: "Invalid Password"
+        });
+        return
     }
 
     const payload = {
@@ -44,7 +62,8 @@ const loginhandler = async(req, res) => {
         name: data.data.users[0].name,
         email: data.data.users[0].email,
         phone_number: data.data.users[0].phone_number,
-        password: data.data.users[0].password
+        password: data.data.users[0].password,
+        message: "success"
     });
 
 

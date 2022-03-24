@@ -10,9 +10,9 @@
                     <food-card-view-vue :food="food"></food-card-view-vue>
             </div>
         </div>
-        <div class="flex justify-center my-8 cursor-pointer">
+        <!-- <div class="flex justify-center my-8 cursor-pointer">
             <div class="capitalize btn border border-gray-200 py-1 px-2 shadow rounded bg-secondary-100 text-secondary-200 hover:shadow-inner hover:bg-opacity-50 transition ease-out duration-300">Load More</div>
-        </div>
+        </div> -->
     </body>
 </div>
 </template>

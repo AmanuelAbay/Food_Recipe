@@ -9,6 +9,7 @@ mutation login($email: String!, $password: String!) {
     email
     phone_number
     password
+    message
   }
 }
 `

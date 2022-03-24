@@ -4,7 +4,7 @@
                 <h2 class="text-black text-3xl font-bold mt-7 mb-4 capitalize">create new food</h2>
             </div>
             <div class="px-7 pt-5 border-t w-full  border-gray-400">
-                <vee-form action="" class="space-y-6" :validation-schema="schema" @submit="register">
+                <vee-form action="" class="space-y-6" :validation-schema="schema" @submit="addRecepie">
                     <div class="grid grid-cols-2 items-center">
                         <div class="pr-7">
                             <label for="name" class="block mb-2 font-bold text-base capitalize">Title</label>
@@ -15,7 +15,41 @@
                     <!-- image upload section -->
                     <div class="pr-7">
                             <label for="name" class="block mb-2 font-bold text-base capitalize">Cover Image</label>
-                            <input type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg,image/jpg" @change="fileUpload"/>
+                            <input type="file" multiple name="image" accept="image/*" @change="fileUpload($event)"/>
+                            <div  class="mt-8 flex overflow-y-hidden overflow-x-auto">
+                            <div
+                            class="relative flex w-32 mr-3"
+                            v-for="(image, index) in images"
+                            :key="index"
+                            >
+                            <img class="w-full" :key="iindex" :src="image" alt="" />
+                            <button
+                                type="button"
+                                class="rounded shadow-lg absolute top-0 bg-white"
+                                @click="removeImage(index)"
+                            >
+                                <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="24px"
+                                viewBox="0 0 24 24"
+                                width="24px"
+                                fill="red"
+                                >
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path
+                                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"
+                                />
+                                </svg>
+                            </button>
+                            </div>
+                            <div class="grid grid-cols-2 items-center">
+                                <div v-if="image_error" class="flex justify-start items-center">
+                                    <font-awesome-icon icon="exclamation-circle" class="text-red-900 text-base ml-5 mr-3"></font-awesome-icon>
+                                    <p class="text-red-900 text-base font-bold">at leaset one image is needed</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="grid grid-cols-2">
                         <div class="mb-3 xl:w-96">
@@ -77,7 +111,7 @@
                             <label for="ingredients" class="block mb-2 font-bold text-base capitalize">ingredients</label>
                             <div v-if="ingredients.length!==0" class="pl-10 font-semibold">
                                 <ol class="space-y-3 mb-5 list-decimal">
-                                    <li v-for="ingredient in ingredients" :key="ingredient.name" class="capitalize pl-2">{{ingredient.name}}{{ingredient.amount}}</li>
+                                    <li v-for="ingredient in ingredients" :key="ingredient.name" class="capitalize pl-2">{{ingredient.name}} {{separator}}{{ingredient.amount}}</li>
                                 </ol>
                             </div>
 
@@ -106,7 +140,7 @@
                             <label for="steps" class="block mb-2 font-bold text-xl capitalize">Necessary Steps</label>
                             <div v-if="steps.length!==0" class="pl-10 font-semibold">
                                 <ol class="space-y-3 mb-5 list-decimal">
-                                    <li v-for="step in steps" :key="step" class="capitalize pl-2">{{step}}</li>
+                                    <li v-for="step in steps" :key="step" class="capitalize pl-2">{{step.description}}</li>
                                 </ol>
                             </div>
 
@@ -134,6 +168,7 @@
                                 rows="4"
                                 placeholder="Steps"
                                 @keyup.enter="addSteps"
+                                @click.prevent="this.isStepNull=false"
                                 v-model="step"
                                     ></textarea>
                                 </div>
@@ -142,11 +177,25 @@
                                 </div>
                                 <div v-if="isStepNull" class="flex justify-start items-center mt-1">
                                     <font-awesome-icon icon="exclamation-circle" class="text-red-900 text-base ml-5 mr-3"></font-awesome-icon>
-                                    <p class="text-red-900 text-base font-bold">please fill the form first</p>
+                                    <p class="text-red-900 text-base font-bold">Empty Step</p>
                                 </div>
                         </div>
                     </div>
-                    <button type="submit" class="w-50 bg-primary p-3 rounded text-white hover:bg-orange-700 transition duration-300">Create</button>
+                    <button type="submit" class="w-50 flex flex-col bg-primary p-3 rounded text-white hover:bg-orange-700 transition duration-300">
+                    <div v-if="loading" class="mx-auto w-full">
+                            <div class="bar bar1"></div>
+                            <div class="bar bar2"></div>
+                            <div class="bar bar3"></div>
+                            <div class="bar bar4"></div>
+                            <div class="bar bar5"></div>
+                            <div class="bar bar6"></div>
+                            <div class="bar bar7"></div>
+                            <div class="bar bar8"></div>
+                        </div>
+                        <div v-if="!loading" class="capitalize">
+                            create
+                        </div>
+                    </button>
                 </vee-form>
             </div>
         </div>    
@@ -154,6 +203,8 @@
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import ADD_FOODS from "../../../../graphql/create_food.js"
+import UPLOAD_IMAGE from "../../../../graphql/UPLOAD_IMAGE.js"
+import {userId} from "../../../../utils/user.js"
 export default {
     components:{
         FontAwesomeIcon
@@ -164,16 +215,15 @@ export default {
             error_ingredient_amount:false,
             step:"",
             isStepNull:false,
-            // category:"",
             steps: [],
-            separatedString:[],
+            images:[],
+            images_url:[],
             ingredients:[],
             ingredientName:"",
-            // title:"",
-            // duration:"",
-            ingredient:"",
             description:"",
+            separator:" Amount ",
             amount:null,
+            loading:false,
             schema: {
                 title: 'required|alpha_spaces',
                 duration:   'required',
@@ -182,51 +232,150 @@ export default {
         }
     },
     methods:{
-        addSteps(){
-            if(this.step!=="" && this.step.replace(/\s/g, "").split("").length!==0){
-                this.steps.push(this.step);
-                this.joinSteps();
-                this.step = "";
+            addSteps(){
+            if(!(this.step === null || this.step.trim() === '')){
+                let step={step_number:this.steps.length+1, description:this.step}
+                this.steps.push(step);
                 this.isStepNull=false;
+                this.step="";
             }
-            else if( this.step==="" || this.step.replace(/\s/g, "").length===0 ) {
+            else if( this.step === null || this.step.trim() === '' ) {
                 this.isStepNull=true;
             }
         },
-        addIngredients(){
-            let ingredient = {name:this.ingredientName, amount:this.amount}
+            addIngredients(){
             if(!(this.ingredientName === null || this.ingredientName.trim() === '')){
                 if(!(this.amount === null || this.amount<=0))
-                this.ingredients.push(ingredient);
+                {
+                    let ingredient = {name:this.ingredientName, amount:this.amount}
+                    this.ingredients.push(ingredient);
+                    this.ingredientName="";
+                    this.amount="";
+                }
             else this.error_ingredient_amount = true
             }
             else this.error_ingredient_name = true
         },
-        joinSteps(){
-            this.totalStep = this.steps.join('-');
-        },
-        separatedStrings(){
-            this.separatedString=this.totalStep.split('-');
-        },
-        checkCatagory(){
-            if(this.category===null)
-            return true;
-        },
-        register(food){
-            this.$apollo.mutate(
-                {
-                    mutation: ADD_FOODS,
+            fileUpload(event) {
+            this.image_error = false;
+            const selectedImages = event.target.files;
+            for (let i = 0; i < selectedImages.length; i++) {
+                this.createBase64Image(selectedImages[i]);
+               }
+            // let path = this.$apollo.mutate({
+            //   mutation: UPLOAD_IMAGE,
+            //   variables:{
+            //       image: this.images[1],
+            //       folder: "Images",
+            //   }
+            // });
+            },
+            createBase64Image(ImageObject) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                this.images.push(reader.result);
+            }
+            reader.readAsDataURL(ImageObject);
+            },
+            async storePath(food){
+                for(let image_index=0; image_index<this.images.length;image_index++){
+                    let path = await this.$apollo.mutate({
+                    mutation: UPLOAD_IMAGE,
                     variables:{
-                        category: food.category,
-                        description: this.description,
-                        duration: food.duration,
-                        title: food.title,
-                        created_by: 1
+                        image: this.images[image_index],
+                        folder: "Images",
+                    }
+                    });
+                    this.images_url.push({ image_status:"not_profile", path:path.data.upload.path})
+                    if(image_index === (this.images.length-1)){
+                        this.$apollo.mutate(
+                                    {
+                                        mutation: ADD_FOODS,
+                                        variables:{
+                                                title:food.title,
+                                                steps: this.steps,
+                                                ingredients: this.ingredients,
+                                                category: food.category,
+                                                user_id: userId.value,
+                                                description: this.description,
+                                                duration: food.duration,
+                                                images_url:this.images_url
+                                                }
+                                    }
+                                )
+                                this.loading = false
+                                location.replace("/setting/dashboard");
                     }
                 }
-            )
-            location.replace("/setting/dashboard");
+            },
+            removeImage(index){
+                this.images.splice(index, 1);
+            },
+        addRecepie(food){
+            if(this.ingredients.length>0){
+            if(this.steps.length>0){
+                if(this.images.length>0){
+                    this.loading=true
+                    this.storePath(food)
+            }
+                else this.image_error=true;
+            }
+            else this.isStepNull=true;
+            }
+            else this.error_ingredient_name=true;
         }
-    }
+        }
 }
 </script>
+<style scoped>
+
+.bar {
+  width: 10px;
+  height: 20px;
+  display: inline-block;
+  transform-origin: bottom center;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  /*   box-shadow:5px 10px 20px inset rgba(255,23,25.2); */
+  animation: loader 1.2s linear infinite;
+}
+.bar1 {
+  animation-delay: 0.1s;
+}
+.bar2 {
+  animation-delay: 0.2s;
+}
+.bar3 {
+  animation-delay: 0.3s;
+}
+.bar4 {
+  animation-delay: 0.4s;
+}
+.bar5 {
+  animation-delay: 0.5s;
+}
+.bar6 {
+  animation-delay: 0.6s;
+}
+.bar7 {
+  animation-delay: 0.7s;
+}
+.bar8 {
+  animation-delay: 0.8s;
+}
+
+@keyframes loader {
+  0% {
+    transform: scaleY(0.1);
+    background: yellowgreen;
+  }
+  50% {
+    transform: scaleY(1);
+    background: yellowgreen;
+  }
+  100% {
+    transform: scaleY(0.1);
+    background: transparent;
+  }
+}
+</style>

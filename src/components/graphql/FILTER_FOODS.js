@@ -40,6 +40,9 @@ query filter($food_id:Int!) {
     favorites{
       favorite_user_id
     }
+    images{
+      path
+    }
   }
 }
 `

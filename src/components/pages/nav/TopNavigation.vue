@@ -10,68 +10,61 @@
             </div>
         </div>
 
-        <div v-if="this.$route.path=='/foods' || this.$route.path=='/'" class="pr-7">
-            <select v-model="category" @change="this.$store.dispatch('setCategory',category)" class="w-full relative capitalize border border-gray-400 p-1 rounded focus:border-primary active:border-primary" name="filter" id="filter">
-                <option value="all">All</option>
-                <option value="fruits">Fruits</option>
-                <option value="vegetables">Vegetables</option>
-                <option value="grains">Grains</option>
-                <option value="proteins">Protein</option>
-                <option value="meats">meats</option>
-                <option value="dairys">Dairy</option>
-                <option value="poultrys">Poultry</option>
-                <option value="seafoods">Fish and seafood</option>
-                <option value="eggs">Eggs</option>
-                <option value="seeds">Nuts and seeds</option>
-                <option value="beans">Legumes/beans</option>
-            </select>
+        <div class="flex justify-end items-center pr-5 space-x-5">
+            <div v-if="this.$route.path=='/foods' || this.$route.path=='/'" class="">
+                <select v-if="loggedIn" v-model="category" @change="this.$store.dispatch('setCategory',category)" class="w-full relative capitalize border border-gray-400 p-1 rounded focus:border-primary active:border-primary" name="filter" id="filter">
+                    <option value="all">All</option>
+                    <option value="fruits">Fruits</option>
+                    <option value="vegetables">Vegetables</option>
+                    <option value="grains">Grains</option>
+                    <option value="proteins">Protein</option>
+                    <option value="meats">meats</option>
+                    <option value="dairys">Dairy</option>
+                    <option value="poultrys">Poultry</option>
+                    <option value="seafoods">Fish and seafood</option>
+                    <option value="eggs">Eggs</option>
+                    <option value="seeds">Nuts and seeds</option>
+                    <option value="beans">Legumes/beans</option>
+                </select>
+            </div>
+            <div v-if="!loggedIn" class="flex justify-end items-center pr-5 space-x-5">
+                <div v-if="this.visible()">
+                    <router-link class="w-50 bg-gray-400 px-3 py-2 rounded text-white hover:bg-gray-700 transition duration-300 capitalize" to="/signup">sign up</router-link>
+                </div>
+                <div v-if="this.visible()">
+                    <router-link class="w-50 bg-primary px-3 py-2 rounded text-white hover:bg-orange-900 transition duration-300 capitalize" to="/signin">sign in</router-link>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <script>
 // import ALL_FOODS from "../../graphql/fetch_foods.js"
 // import FILTER_FOOD from "../../graphql/FILTER_FOOD.js"
+import {isLoggedIn} from "../../utils/user.js"
+// import {unset} from "../../utils/user.js"
 export default {
     data(){
         return {
             category: "all",
-            search:""
+            path:this.$route.path,
+            search:"",
+            loggedIn:false
+            
         }
     },
     methods:{
-        display(){
-            console.log(this.search);
-            console.log("datas from store state variable")
-            console.log(this.$store.getters.getSearch);
-},
-       Category(){
-            // console.log("selected category");
-            // console.log(this.category);
-            // console.log("after change")
-            // let category = this.$store.getters.getCategory
-            // console.log(category);
-            //  this.$router.go();
-    //         let FOODS = "fetching_query";
-    // if (this.category === "all") {
-    //     FOODS = await this.$apollo.query({
-    //         query: ALL_FOODS
-    //     })
-    // } else {
-    //     FOODS = await this.$apollo.query({
-    //         query: FILTER_FOOD,
-    //         variables: {
-    //             category: this.category
-    //         }
-    //     })
-    // }
-    // this.$emit('foods',FOODS.data.foods);
-    // console.log("foods in array format");
-    // console.log(FOODS.data.foods)
-    // console.log( "foods in json format");
-    // let FOOD=JSON.parse(JSON.stringify(FOODS.data.foods));
-    // console.log(FOOD);
-
+        visible(){
+            if((this.$route.path ==="/signin") || (this.$route.path==="/signup"))
+                {return false;}
+            else return true
+            // else if(this.$route.path==="/signup")
+            // return false;
+            // else return true;
         }
+    },
+    mounted(){
+        this.loggedIn=isLoggedIn.value
     }
 }
 </script>
