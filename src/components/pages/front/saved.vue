@@ -18,10 +18,6 @@
                 <div class="flex justify-center text-4xl font-bold items-center">No Favorite Food</div>
             </div>
         </div>
-        
-        <div class="flex justify-center my-8 cursor-pointer">
-            <div class="capitalize btn border border-gray-200 py-1 px-2 shadow rounded bg-secondary-100 text-secondary-200 hover:shadow-inner hover:bg-opacity-50 transition ease-out duration-300">Load More</div>
-        </div>
     </body>
     <div v-else class="flex h-screen">
         <div class="m-auto">

@@ -1,6 +1,12 @@
 <template>
 <div>
-    <div v-if="$apollo.loading" class="items-center"> Loading... </div>
+    <div v-if="$apollo.loading" class="items-center"> 
+        <div class="flex h-screen">
+            <div class="m-auto">
+                <div class="flex justify-center text-4xl items-center">Loading...</div>
+            </div>
+        </div>
+    </div>
     <div v-else class="flex flex-col items-start px-14">
         <div class="flex flex-col items-center">
             <h2 class="text-black text-3xl font-bold mt-7 mb-4 capitalize" @click="display">Edit Food</h2>
@@ -13,11 +19,6 @@
                         <vee-field :value="foods[0].title" type="text" required name="title" placeholder="Name" id="title" class="border border-gray-400 w-full rounded outline-none focus:border-primary py-1 px-3 text-base"/>
                         <ErrorMessage class="text-red-600" name="title"/>
                     </div>
-                </div>
-                <!-- image upload section -->
-                <div class="pr-7">
-                        <label for="name" class="block mb-2 font-bold text-base capitalize">Cover Image</label>
-                        <input type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg,image/jpg" @change="fileUpload"/>
                 </div>
                 <div class="">
                     <div class="mb-3 xl:w-110">
@@ -85,9 +86,40 @@
                             <div class="pl-10 font-semibold">
                                 <ol class="space-y-3 mb-5 list-decimal">
                                     <li v-for="ingredient in foods[0].ingredients" :key="ingredient.id" class="capitalize pl-2">
-                                        <ingredientInput :ingredient="ingredient"/>
+                                        <ingredientInput :ingredient="ingredient" :foodId="this.$route.params.id"/>
                                     </li>
                                 </ol>
+
+                                <!-- adding ingredients column -->
+                                <div class="grid grid-cols-2 items-center mt-3">
+                                    <div class="pr-7">
+                                        <input @keyup.enter="addIngredients" @click="error_ingredient_name=false" v-model="ingredientName" type="text" required name="name" placeholder="Name"  id="ingredientName" class="border border-gray-400 w-full rounded outline-none focus:border-primary py-1 px-3 text-base"/>
+                                        <div v-if="error_ingredient_name" class="flex justify-start items-center">
+                                            <font-awesome-icon icon="exclamation-circle" class="text-red-900 text-base ml-5 mr-3"></font-awesome-icon>
+                                            <p class="text-red-900 text-base font-bold">error</p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-start items-center space-x-3">
+                                            <input @keyup.enter="addIngredients" @click="error_ingredient_amount=false" v-model="amount" name="duration" min="0" type="number" id="amount" required placeholder="(gram)" class="border block border-gray-400 w-35 rounded outline-none focus:border-primary py-1 px-3 text-base"/>
+                                            <button @click.prevent="addIngredients" :class="{'cursor-not-allowed': loading}" :disable="loading" class="w-50 bg-primary p-3 rounded text-white hover:bg-primary transition duration-300">Add</button>
+                                        </div>
+
+                                        <div class="grid grid-cols-2 items-center">
+                                            <div v-if="error_ingredient_amount" class="flex justify-start items-center">
+                                                <font-awesome-icon icon="exclamation-circle" class="text-red-900 text-base ml-5 mr-3"></font-awesome-icon>
+                                                <p class="text-red-900 text-base font-bold">error</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="grid grid-cols-2 items-center">
+                                            <div v-if="error" class="flex justify-start items-center">
+                                                <font-awesome-icon icon="exclamation-circle" class="text-red-900 text-base ml-5 mr-3"></font-awesome-icon>
+                                                <p class="text-red-900 text-base font-bold">error</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                     </div>
                 </div>
@@ -99,19 +131,58 @@
                                 <stepInput :step="step"/>
                                 </li>
                             </ol>
+                            <div class="grid grid-cols-2 items-center">
+                                <div class="pr-7">
+                                    <textarea
+                                class="
+                                    form-control
+                                    block
+                                    w-full
+                                    px-3
+                                    py-1.5
+                                    text-base
+                                    font-normal
+                                    text-gray-700
+                                    bg-white bg-clip-padding
+                                    border border-solid border-gray-300
+                                    rounded
+                                    transition
+                                    ease-in-out
+                                    m-0
+                                    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+                                "
+                                id="steps"
+                                rows="4"
+                                placeholder="Steps"
+                                @keyup.enter="addSteps"
+                                @click.prevent="this.isStepNull=false"
+                                v-model="step"
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <button @click.prevent="addSteps" class="w-50 bg-primary p-3 rounded text-white hover:bg-orange-700 transition duration-300">Add</button>    
+                                </div>
+                                <div v-if="isStepNull" class="flex justify-start items-center mt-1">
+                                    <font-awesome-icon icon="exclamation-circle" class="text-red-900 text-base ml-5 mr-3"></font-awesome-icon>
+                                    <p class="text-red-900 text-base font-bold">Empty Step</p>
+                                </div>
+                            </div>
                         </div>
                 </div>
                 <button type="submit" @click.prevent="update_food" class="w-50 bg-primary p-3 rounded text-white hover:bg-orange-700 transition duration-300">Done</button>
             </vee-form>
         </div>
     </div>    
+    
 </div>
 </template>
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import EDIT_FOOD from "../../../../graphql/EDIT_FOOD.js";
 import FILTER_FOOD from "../../../../graphql/FILTER_FOODS.js";
+import ADD_STEP from "../../../../graphql/ADD_STEP.js";
 import STEP from "../../../../graphql/STEPS.js";
+import ADD_INGREDIENT from "../../../../graphql/ADD_INGREDIENT.js";
 import stepInput from "../../../front/cardViews/stepInput.vue";
 import ingredientInput from "../../../front/cardViews/ingredientInput.vue";
 export default {
@@ -122,7 +193,15 @@ export default {
     },
     data(){
         return {
+            isStepNull:false,
             error:false,
+            toggleup:true,
+            error_ingredient_name:false,
+            error_ingredient_amount:false,
+            ingredientName:"",
+            step: "",
+            amount:"",
+            loading:false,
             foods:[],
             steps: [],
             schema: {
@@ -142,6 +221,7 @@ export default {
             {
                 if(!(title === null || title.trim() === ''))
                 if(!(duration === null || duration.trim() === '')){
+                    this.loading=true;
                     this.$apollo.mutate(
                     {
                         mutation: EDIT_FOOD,
@@ -149,17 +229,57 @@ export default {
                             category: category,
                             description: description,
                             duration: duration,
-                            title: title,
+                            title: title.toUpperCase(),
                             id: this.$route.params.id
                                     }
                                 }
                             )
-                location.replace("/setting/dashboard");
                 }
+                location.replace("/setting/dashboard");
             }
             else this.error=true
+        },
+        addIngredients(){
+            if(!(this.ingredientName === null || this.ingredientName.trim() === '')){
+                if(!(this.amount === null || this.amount<=0))
+                {
+                    // adding ingredients
+                    this.loading=true;
+                    this.$apollo.mutate({
+                        mutation: ADD_INGREDIENT,
+                        variables: { 
+                            food_id:this.$route.params.id,
+                            name:this.ingredientName,
+                            amount:this.amount
+                         },
+                    });
+                    this.loading=false;
+                    this.ingredientName="";
+                    this.amount="";
+                }
+            else this.error_ingredient_amount = true
+            }
+            else this.error_ingredient_name = true
+        },
+        addSteps(){
+            if(!(this.step === null || this.step.trim() === '')){
+                this.loading=true;
+                    this.$apollo.mutate({
+                        mutation: ADD_STEP,
+                        variables: { 
+                            food_id:this.$route.params.id,
+                            step_number:this.steps.length+1,
+                            step_description:this.step
+                         },
+                    });
+                this.loading = false;
+                this.isStepNull = false;
+                this.step="";
+            }
+            else if( this.step === null || this.step.trim() === '' ) {
+                this.isStepNull=true;
+            }
         }
-        
     },
     apollo:{
         foods:{

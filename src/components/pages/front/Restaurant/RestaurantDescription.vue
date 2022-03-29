@@ -2,7 +2,7 @@
     <body  class="flex flex-col">
         <!-- top image -->
         <div class="h-95 w-full relative items-center">
-            <img :src="img_src" alt="Kaldi's Coffee" class="from-black to-transparent h-80 w-full object-cover">
+            <img :src="img_src" :alt="foods[0].title" class="from-black to-transparent h-80 w-full object-cover">
             <div class="flex justify-between w-full items-center px-20 absolute bottom-2">
                 <div class="flex flex-col">
                     <div class="font-bold text-white text-4xl uppercase">{{this.foods[0].title}}</div>
@@ -40,8 +40,7 @@
                 <li class="text-base list-decimal pl-1" v-for="step in foods[0].steps" :key="step.id">{{step.description}}</li>
             </ul>
         </div>
-            <rating-and-review-card-view-vue @click="rateValue" class="pl-20 mb-2" :food="foods[0]" ></rating-and-review-card-view-vue>
-        
+            <rating-and-review-card-view-vue @click="rateValue" class="pl-20 mb-2" :food="foods[0]" ></rating-and-review-card-view-vue>   
         
         <div class="bg-gray-200 w-full  mt-14">
             <div class="bg-gray-200  md:w-full items-center flex justify-start ml-20 pt-4 mb-6">
@@ -95,7 +94,7 @@ export default {
             rate: 0,
             spaceProvider:" grams of ",
             images:[],
-            img_src:"",
+            img_src:"../../../../assets/logo.png",
             breaker:false,
             loggedIn:false
         }
@@ -219,7 +218,8 @@ export default {
             let  sum = this.foods[0].rates.reduce(function (prev, next) {
                 return prev + next.value;
                 }, 0);
-            this.rate = (sum/this.foods[0].rates.length);
+            let rate_value=(sum/this.foods[0].rates.length);
+            this.rate = parseFloat(rate_value).toFixed(1);
             }
         else this.rate = 0;
 

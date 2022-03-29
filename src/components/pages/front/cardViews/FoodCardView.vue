@@ -187,7 +187,8 @@ export default {
                 let  sum = this.food.rates.reduce(function (prev, next) {
                     return prev + next.value;
                     }, 0);
-                this.rate = (sum/this.food.rates.length);
+                let rate_value=(sum/this.food.rates.length)
+                this.rate = parseFloat(rate_value).toFixed(1);
                 }
             else this.rate = 0;
             }

@@ -78,8 +78,6 @@
 import user from "../../../store/Mutations/signup.js";
 import { useStorage } from "@vueuse/core";
 import {set} from "../../../utils/user.js";
-// import {userId} from "../../../utils/user.js";
-// import {token} from "../../../utils/user.js";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 export default{
      data() {
@@ -91,7 +89,7 @@ export default{
                 firstname: 'required|alpha_spaces',
                 lastname:   'required',
                 email:'required|min:4|max:20|email',
-                phonenumber:'required',
+                phonenumber:'required|min:10|max:12|',
                 password:'required',
                 confirmpassword:'password_mismatch:@password'
             },

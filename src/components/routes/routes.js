@@ -7,7 +7,6 @@ import SignUp from "../pages/front/sign_up/sign_up_users.vue"
 import SignIn from "../pages/front/sign_up/login.vue"
 import MainSetting from "../pages/back/account/admin/MainSetting.vue"
 import Dashboard from "../pages/back/account/admin/dashboard.vue"
-import AccountSetting from "../pages/back/account/admin/account_setting.vue"
 import CreateNewFood from "../pages/back/account/admin/create_new_food.vue"
 import EditItem from "../pages/back/account/admin/edititem.vue"
 import NotFound from "../pages/layouts/notFound.vue"
@@ -35,7 +34,6 @@ const router = createRouter({
             children: [
                 { path: '/', component: Dashboard, beforeEnter: AuthGuard },
                 { path: 'dashboard', component: Dashboard, beforeEnter: AuthGuard },
-                { path: 'account_setting', component: AccountSetting, beforeEnter: AuthGuard },
                 { path: 'newItem', component: CreateNewFood, beforeEnter: AuthGuard },
                 { path: 'edititem/:id', component: EditItem, beforeEnter: AuthGuard }
             ],

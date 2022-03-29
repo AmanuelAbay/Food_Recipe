@@ -179,23 +179,30 @@
                                     <font-awesome-icon icon="exclamation-circle" class="text-red-900 text-base ml-5 mr-3"></font-awesome-icon>
                                     <p class="text-red-900 text-base font-bold">Empty Step</p>
                                 </div>
-                        </div>
+                            </div>
                     </div>
-                    <button type="submit" class="w-50 flex flex-col bg-primary p-3 rounded text-white hover:bg-orange-700 transition duration-300">
-                    <div v-if="loading" class="mx-auto w-full">
-                            <div class="bar bar1"></div>
-                            <div class="bar bar2"></div>
-                            <div class="bar bar3"></div>
-                            <div class="bar bar4"></div>
-                            <div class="bar bar5"></div>
-                            <div class="bar bar6"></div>
-                            <div class="bar bar7"></div>
-                            <div class="bar bar8"></div>
-                        </div>
-                        <div v-if="!loading" class="capitalize">
-                            create
-                        </div>
-                    </button>
+                    <div class="flex justify-start items-center space-x-5">
+                        <button type="submit" class="w-50 flex flex-col bg-primary p-3 rounded text-white hover:bg-red-700 transition duration-300">
+                        <div v-if="loading" class="mx-auto w-full" :class="{'cursor-not-allowed': loading}" :disable="loading">
+                                <div class="bar bar1"></div>
+                                <div class="bar bar2"></div>
+                                <div class="bar bar3"></div>
+                                <div class="bar bar4"></div>
+                                <div class="bar bar5"></div>
+                                <div class="bar bar6"></div>
+                                <div class="bar bar7"></div>
+                                <div class="bar bar8"></div>
+                            </div>
+                            <div v-if="!loading" class="capitalize">
+                                create
+                            </div>
+                        </button>
+                        <button @click.prevent="cancel()" class="w-50 flex flex-col bg-red-500 p-3 rounded text-white hover:bg-orange-700 transition duration-300">
+                            <div v-if="!loading" class="capitalize">
+                                Cancel
+                            </div>
+                        </button>
+                    </div>
                 </vee-form>
             </div>
         </div>    
@@ -232,6 +239,7 @@ export default {
         }
     },
     methods:{
+        cancel(){location.replace("/setting/dashboard");},
             addSteps(){
             if(!(this.step === null || this.step.trim() === '')){
                 let step={step_number:this.steps.length+1, description:this.step}
@@ -247,7 +255,7 @@ export default {
             if(!(this.ingredientName === null || this.ingredientName.trim() === '')){
                 if(!(this.amount === null || this.amount<=0))
                 {
-                    let ingredient = {name:this.ingredientName, amount:this.amount}
+                    let ingredient = {name:this.ingredientName, amount:Math.round(this.amount)}
                     this.ingredients.push(ingredient);
                     this.ingredientName="";
                     this.amount="";
@@ -292,7 +300,7 @@ export default {
                                     {
                                         mutation: ADD_FOODS,
                                         variables:{
-                                                title:food.title,
+                                                title:food.title.toUpperCase(),
                                                 steps: this.steps,
                                                 ingredients: this.ingredients,
                                                 category: food.category,
