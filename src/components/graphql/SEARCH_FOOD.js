@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
-const FETCHING_FOODS = gql `
-query MyQuery {
-  foods {
+const SEARCH_FOOD = gql `
+query search($search_key:String!) {
+    foods(where: {title: {_regex: $search_key}}){
     id
     title
     description
@@ -31,7 +31,7 @@ query MyQuery {
       comment
     }
     likes{
-      like_user_id
+      id
     }
     rates {
       rate_user_id
@@ -46,4 +46,4 @@ query MyQuery {
   }
 }
 `
-export default FETCHING_FOODS
+export default SEARCH_FOOD

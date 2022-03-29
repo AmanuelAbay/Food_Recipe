@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 
-const FETCHING_FOODS = gql `
-query MyQuery {
-  foods {
+const FILTER_FOODS = gql `
+query filter($food_id:Int!) {
+  foods(where: {id: {_eq: $food_id}}){
     id
     title
     description
@@ -30,9 +30,9 @@ query MyQuery {
       }
       comment
     }
-    likes{
-      like_user_id
-    }
+    # likes{
+    #   id
+    # }
     rates {
       rate_user_id
       value
@@ -46,4 +46,4 @@ query MyQuery {
   }
 }
 `
-export default FETCHING_FOODS
+export default FILTER_FOODS

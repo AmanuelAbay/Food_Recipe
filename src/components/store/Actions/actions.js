@@ -10,8 +10,8 @@ export default {
     favorite(context, food) {
         context.commit('favorite', food);
     },
-    signup(context, newUser) {
-        context.commit('signup', newUser);
+    signup(context, newUserId) {
+        context.commit('signup', newUserId);
     },
     login(context, userId) {
         context.commit('login', userId);
@@ -21,6 +21,16 @@ export default {
     },
     isLoggedInSetter(context, value) {
         context.commit('isLoggedInSetter', value)
+    },
+    filter_foods({ commit }, FOOD) {
+        commit('filter_foods', FOOD)
+
+    },
+    setCategory({ commit }, value) {
+        commit('category', value)
+    },
+    setSearch({ commit }, value) {
+        commit('search', value)
     }
 
 }

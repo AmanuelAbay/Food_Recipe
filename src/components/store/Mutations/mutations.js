@@ -1,9 +1,10 @@
 import LikeFoods from './like.js'
 import favoritefoods from './favorite.js'
-import signup from './signup.js';
+// import sign_up from './signup.js';
 import FoodComment from './comment.js'
-const apollo_client = require("../../utils/apollo");
-const GET_USER = require("../../graphql/USER.js");
+// const apollo_client = require("../../utils/apollo");
+// const GET_USER = require("../../graphql/USER.js");
+
 export default {
     comments(food) {
         FoodComment(food);
@@ -14,23 +15,32 @@ export default {
     favorite(food) {
         favoritefoods(food.id)
     },
-    signup(state, newUser) {
-        const registerd_user = signup(newUser);
-        console.log(registerd_user);
+    signup(state, newUserId) {
+        // set currentUserId
+        state.user_id = newUserId
     },
-    async login(state, UserId) {
-        let data = await apollo_client.query({
-            query: GET_USER,
-            variables: { id: UserId },
-        });
+    login(state, UserId) {
         // set fetched data to currentUser in statedata
-        state.currentUser = data.data.users[0];
+        state.userId = UserId;
     },
     isLoggedInSetter(state, value) {
-        state.currentUser = value.currentUser;
         state.isLoggedIn = value.isLoggedIn;
     },
     logout(state) {
         state.isLoggedIn = false;
     },
+    filter_foods(state, FOOD) {
+        state.foods = FOOD;
+        console.log("From filter foods mutuation");
+        console.log(FOOD);
+
+        console.log("STATE VARIABLE FOOD");
+        console.log(state.foods);
+    },
+    category(state, payload) {
+        state.category = payload
+    },
+    search(state, payload) {
+        state.search = payload
+    }
 }
