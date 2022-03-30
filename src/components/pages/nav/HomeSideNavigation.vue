@@ -1,6 +1,6 @@
 <template>
         <nav>
-            <ul class="md:block text-lg mt-7 space-y-2 items-center"> 
+            <ul class="md:flex justify-end text-lg mt-7 space-x-2 items-center"> 
                 <li>
                     <router-link to="/foods" class="px-3 flex justify-end">
                         <span>Food</span>
@@ -50,8 +50,5 @@ export default {
 }
 </script>
 <style scoped>
-a.router-link-active {
-        border-right:4px solid #FF7F3F;
-        font-weight: bold;
-    }
+
 </style>

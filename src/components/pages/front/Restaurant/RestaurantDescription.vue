@@ -24,7 +24,7 @@
             </p>
 
             <!-- rating and address section -->
-                <div class="flex justify-between items-center mr-6 font-bold mt-3 border-b border-gray-400 pb-10">
+                <div class="flex justify-end items-center mr-6 font-bold mt-3 border-b border-gray-400 pb-10">
                     <div class="pl-1 uppercase">{{this.foods[0].category}}</div>
                 </div>
         </div>

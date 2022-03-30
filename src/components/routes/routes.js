@@ -19,7 +19,8 @@ const router = createRouter({
             component: HomePage,
             name: "Home",
             children: [
-                { path: '/', component: FoodListVue },
+                { path: '/', redirect: '/foods' },
+                { path: '/food', redirect: '/foods' },
                 { path: 'foods', component: FoodListVue },
                 { path: 'saved', component: Saved, beforeEnter: AuthGuard }
             ],

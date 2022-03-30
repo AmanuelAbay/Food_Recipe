@@ -2,6 +2,8 @@ const ApolloClient = require('apollo-boost').ApolloClient;
 const InMemoryCache = require('apollo-cache-inmemory').InMemoryCache;
 const createHttpLink = require('apollo-link-http').createHttpLink;
 const fetch = require('cross-fetch/polyfill').fetch;
+const token = require('./user.js');
+
 
 
 const apollo_client = new ApolloClient({
@@ -10,6 +12,7 @@ const apollo_client = new ApolloClient({
         fetch: fetch,
         headers: {
             "content-type": "application/json",
+            authorization: token ? `Bearer ${token.value}` : undefined,
             "x-hasura-admin-secret": "superpassword"
         }
     }),

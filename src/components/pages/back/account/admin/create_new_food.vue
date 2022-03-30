@@ -197,8 +197,8 @@
                                 create
                             </div>
                         </button>
-                        <button @click.prevent="cancel()" class="w-50 flex flex-col bg-red-500 p-3 rounded text-white hover:bg-orange-700 transition duration-300">
-                            <div v-if="!loading" class="capitalize">
+                        <button v-if="!loading" @click.prevent="cancel()" class="w-50 flex flex-col bg-red-500 p-3 rounded text-white hover:bg-orange-700 transition duration-300">
+                            <div class="capitalize">
                                 Cancel
                             </div>
                         </button>

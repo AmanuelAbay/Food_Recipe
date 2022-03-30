@@ -7,7 +7,7 @@
             </div>
 
             <!-- list of card views will be displayed -->
-            <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-10 pb-10">
                 <div v-for="favorite in favorites" :key="favorite.id">
                         <food-card-view-vue :food="favorite.food"></food-card-view-vue>
                 </div>

@@ -1,19 +1,62 @@
 <template>
 <div>
-    <body class="pr-5 pl-14" v-if="!this.$apollo.loading">
-        <div class="pt-6">
-            <h4 class="text-secondary-900 text-4xl font-bold border-b border-secondary pb-2" @click="callingGetters()">Foods</h4>
-        </div>
-        <!-- list of card views will be displayed -->
-         <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-10 pb-10">
-            <div v-for="food in foods" :key="food.id">
-                    <food-card-view-vue :food="food"></food-card-view-vue>
+    <div class="header-content mx-auto text-center">
+        <div class="text-center flex flex-col items-center text-white capitalize py-20 font-serif mb-7">
+            <div class="text-4xl font-bold pb-2">Kaffe</div>
+            <div class="text-3xl ">Good Food , Great Vibe </div>
+            <div class="increase-width align-center flex justify-center items-center  border border-gray-400 mt-12 mx-2 bg-white rounded">
+                <input type="text" @input="this.$store.dispatch('setSearch',searching.toUpperCase())" v-model="searching" placeholder="Search..." autocomplete="off" class="w-full search-input text-black text-base placeholder-gray ml-3">
+                <div class="px-2 py-3 bg-primary-450">
+                    <svg class="w-4 h-4" fill="none" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
             </div>
         </div>
-        <!-- <div class="flex justify-center my-8 cursor-pointer">
-            <div class="capitalize btn border border-gray-200 py-1 px-2 shadow rounded bg-secondary-100 text-secondary-200 hover:shadow-inner hover:bg-opacity-50 transition ease-out duration-300">Load More</div>
-        </div> -->
+    </div>
+
+    <section>
+        <div class="font-serif text-center mt-4 pr-20">
+            <div class="text-2xl font-bold pb-1">Popular Foods</div>
+            <div class="text-base capitalize">explore current tranding foods </div>
+        </div>
+        <div class="text-center -mt-10 flex justify-end">
+            <div class="px-20 flex justify-end items-center">
+                <div class="capitalize pr-4">Filter</div>
+                <select v-model="category" @change="this.$store.dispatch('setCategory',category)" class="w-full relative capitalize border border-gray-400 p-1 rounded focus:border-primary active:border-primary" name="filter" id="filter">
+                    <option value="all">All</option>
+                    <option value="fruits">Fruits</option>
+                    <option value="vegetables">Vegetables</option>
+                    <option value="grains">Grains</option>
+                    <option value="proteins">Protein</option>
+                    <option value="meats">meats</option>
+                    <option value="dairys">Dairy</option>
+                    <option value="poultrys">Poultry</option>
+                    <option value="seafoods">Fish and seafood</option>
+                    <option value="eggs">Eggs</option>
+                    <option value="seeds">Nuts and seeds</option>
+                    <option value="beans">Legumes/beans</option>
+                </select>
+            </div>
+        </div> 
+    </section>
+
+    <body class="grid md:grid-cols-9" v-if="!this.$apollo.loading">
+        <div class="col-span-1"></div>
+        <div class="md:col-span-7 pt-5" v-if="this.foods.length>0">
+          <!-- list of card views will be displayed -->
+          <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-10 pb-10">
+              <div v-for="food in foods" :key="food.id">
+                      <food-card-view-vue :food="food"></food-card-view-vue>
+              </div>
+          </div>
+        </div>
+      <div v-else class="flex md:col-span-7 pt-5">
+        <div class="m-auto">
+            <div class="flex justify-center text-4xl items-center ">NO FOOD IS AVAILABLE</div>
+        </div>
+    </div>
     </body>
+
+    <!-- loading effect -->
     <div v-else>           
         <h1>Cooking in progress..</h1>
         <div id="cooking">
@@ -53,9 +96,8 @@ export default{
     data(){
         return {
             foods:[],
-            // food:this.foods,
-            // GET_FOODS:"query"
-            local_category: "all"
+            category: "all",
+            searching:"",
         }
     },
     apollo: {
@@ -128,6 +170,9 @@ export default{
         })
     }
     this.foods=FOODS.data.foods;
+      },
+      show(){
+        console.log(this.searching)
       }
   },
     mounted(){
@@ -136,6 +181,22 @@ export default{
 }
 </script>
 <style scoped>
+.header-content{
+    background-image:linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("../../../../public/header_food.png");
+    height: 60vh;
+    background-size: cover;
+    background-position: center;
+}
+.search-input:focus{
+    outline: none;
+}
+.search-input{
+    height: 2.5rem;
+}
+.increase-width{
+        width: 40%;
+}
+
 @import url("https://fonts.googleapis.com/css?family=Amatic+SC");
 h1 {
   position: relative;

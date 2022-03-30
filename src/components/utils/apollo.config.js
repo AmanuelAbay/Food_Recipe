@@ -1,6 +1,7 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client/core';
 import { createApolloProvider } from '@vue/apollo-option';
 import { setContext } from '@apollo/client/link/context';
+import { token } from './user.js'
 
 const httpLink = new HttpLink({
     // You should use an absolute URL here
@@ -17,7 +18,7 @@ const authLink = setContext((_, { headers }) => {
         headers: {
             ...headers,
             'Content-Type': 'application/json',
-            // authorization: token ? `Bearer ${token}` : undefined,
+            authorization: token ? `Bearer ${token.value}` : undefined,
             "x-hasura-admin-secret": 'superpassword',
         }
     }
