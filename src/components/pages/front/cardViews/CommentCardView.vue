@@ -12,7 +12,6 @@
     </div>
 </template>
 <script>
-// import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import StarRating from 'vue-star-rating';
 export default {
     // props: ['comment', 'userName', 'userId', 'food'],

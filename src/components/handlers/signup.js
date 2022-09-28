@@ -23,8 +23,8 @@ const signuphandler = async(req, res) => {
 
     if (doesEmailExist.data.users.length > 0) {
         res.json({
-            token: false,
-            message: "Email Already Existed"
+            message: "Email Already Existed",
+            status: false
         });
         return
     }
@@ -35,13 +35,8 @@ const signuphandler = async(req, res) => {
 
     if (doesPhoneNumberExist.data.users.length > 0) {
         res.json({
-            token: false,
-            id: null,
-            name: null,
-            email: null,
-            phone_number: null,
-            password: null,
-            message: "Phone Number Already Existed"
+            message: "Phone Number Already Existed",
+            status: false
         });
         return
     }
@@ -52,23 +47,18 @@ const signuphandler = async(req, res) => {
     });
     const payload = {
         "https://hasura.io/jwt/claims": {
-            "x-hasura-allowed-roles": ["admin", "user"],
-            "x-hasura-default-role": "admin",
+            "x-hasura-allowed-roles": ["user"],
+            "x-hasura-default-role": "user",
             "x-hasura-user-id": data.data.insert_users.returning[0].id,
         }
     }
 
     const token = jwt.sign(payload, process.env.HASURA_GRAPHQL_JWT_SECRETS, {
         algorithm: "HS256",
-        expiresIn: '1hr'
     })
     return res.json({
         token,
-        id: data.data.insert_users.returning[0].id,
-        name: data.data.insert_users.returning[0].name,
-        email: data.data.insert_users.returning[0].email,
-        phone_number: data.data.insert_users.returning[0].phone_number,
-        password: data.data.insert_users.returning[0].password,
+        status: true,
         message: "success"
     })
 }

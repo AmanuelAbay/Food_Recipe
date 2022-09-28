@@ -1,6 +1,5 @@
 <template>
     <top-navigation></top-navigation>
-
   <main>
     <router-view></router-view>
   </main>
